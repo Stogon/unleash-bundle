@@ -20,4 +20,9 @@ interface UnleashInterface
 	 * Check if a feature is enabled.
 	 */
 	public function isFeatureEnabled(string $name, bool $defaultValue = false): bool;
+
+	/**
+	 * Check if a feature is disabled.
+	 */
+	public function isFeatureDisabled(string $name, bool $defaultValue = true): bool;
 }

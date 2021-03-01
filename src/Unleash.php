@@ -80,4 +80,9 @@ class Unleash implements UnleashInterface
 
 		return $defaultValue;
 	}
+
+	public function isFeatureDisabled(string $name, bool $defaultValue = true): bool
+	{
+		return !$this->isFeatureEnabled($name, $defaultValue);
+	}
 }
