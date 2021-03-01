@@ -1,0 +1,58 @@
+{
+    "name": "stogon/unleash-bundle",
+    "description": "Unleash SDK implementation for Symfony framework",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.4|^8.0",
+        "symfony/dependency-injection": "^5.2",
+        "symfony/config": "^5.2",
+        "symfony/http-client": "^5.2",
+        "symfony/contracts": "^v2.3",
+        "symfony/event-dispatcher": "^5.2",
+        "symfony/cache": "^5.2",
+        "symfony/http-kernel": "^5.2",
+        "symfony/security-core": "^5.2"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.2",
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^0.12.65",
+        "friendsofphp/php-cs-fixer": "^2.17"
+    },
+    "scripts": {
+        "cs-fixer": "php-cs-fixer fix --config=.php_cs.dist --diff --dry-run",
+        "format-code": "php-cs-fixer fix --config=.php_cs.dist",
+        "stan": "phpstan analyse --no-progress",
+        "test": "composer unit-test && composer stan && composer cs-fixer",
+        "unit-test": "phpunit --coverage-text --colors=never"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joël Sunier",
+            "email": "jsunier@stogon.io"
+        }
+    ],
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Stogon\\UnleashBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stogon\\UnleashBundle\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "minimum-stability": "stable"
+}
