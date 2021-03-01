@@ -2,6 +2,7 @@
 
 namespace Stogon\UnleashBundle\Strategy;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserWithIdStrategy implements StrategyInterface
@@ -12,20 +13,28 @@ class UserWithIdStrategy implements StrategyInterface
 
 		$ids = explode(',', $userIds);
 
-		$currentUser = $context['user'];
+		if ($context['user']) {
+			/** @var string|\Stringable|UserInterface */
+			$currentUser = $context['user'];
 
-		if (is_string($currentUser)) {
-			return in_array($currentUser, $ids, true);
+			if (is_string($currentUser)) {
+				return in_array($currentUser, $ids, true);
+			}
+
+			if (method_exists($currentUser, 'getId') && in_array($currentUser->getId(), $ids, true)) {
+				return true;
+			}
+
+			if ($currentUser instanceof UserInterface) {
+				return in_array($currentUser->getUsername(), $ids, true);
+			}
+
+			return in_array((string) $currentUser, $ids, true);
 		}
 
-		if (method_exists($currentUser, 'getId')) {
-			return in_array($currentUser->getId(), $ids, true);
-		}
+		/** @var Request */
+		$request = $context['request'];
 
-		if ($currentUser instanceof UserInterface) {
-			return in_array($currentUser->getUsername(), $ids, true);
-		}
-
-		return in_array((string) $currentUser, $ids, true);
+		return in_array($request->getUser(), $ids, true);
 	}
 }

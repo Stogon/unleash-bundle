@@ -2,26 +2,31 @@
 
 namespace Stogon\UnleashBundle;
 
+use Stogon\UnleashBundle\Event\UnleashContextEvent;
 use Stogon\UnleashBundle\Repository\FeatureRepository;
 use Stogon\UnleashBundle\Strategy\StrategyInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class Unleash implements UnleashInterface
 {
 	protected RequestStack $requestStack;
 	protected TokenStorageInterface $tokenStorage;
+	protected EventDispatcherInterface $eventDispatcher;
 	protected FeatureRepository $featureRepository;
 	protected array $strategiesMapping;
 
 	public function __construct(
 		RequestStack $requestStack,
 		TokenStorageInterface $tokenStorage,
+		EventDispatcherInterface $eventDispatcher,
 		FeatureRepository $featureRepository,
 		array $strategiesMapping
 	) {
 		$this->requestStack = $requestStack;
 		$this->tokenStorage = $tokenStorage;
+		$this->eventDispatcher = $eventDispatcher;
 		$this->featureRepository = $featureRepository;
 		$this->strategiesMapping = $strategiesMapping;
 	}
@@ -51,10 +56,14 @@ class Unleash implements UnleashInterface
 			$user = $token->getUser();
 		}
 
-		$context = [
+		$event = new UnleashContextEvent([
 			'request' => $this->requestStack->getMasterRequest(),
 			'user' => $user,
-		];
+		]);
+
+		$this->eventDispatcher->dispatch($event);
+
+		$context = $event->getPayload();
 
 		foreach ($feature->getStrategies() as $strategyData) {
 			$className = $strategyData['name'];
@@ -73,8 +82,8 @@ class Unleash implements UnleashInterface
 				throw new \Exception(sprintf('%s does not implement %s interface.', $className, StrategyInterface::class));
 			}
 
-			if (!$strategy->isEnabled($strategyData['parameters'] ?? [], $context)) {
-				return false;
+			if ($strategy->isEnabled($strategyData['parameters'] ?? [], $context)) {
+				return true;
 			}
 		}
 
