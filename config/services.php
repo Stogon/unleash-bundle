@@ -4,6 +4,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Stogon\UnleashBundle\HttpClient\UnleashHttpClient;
 use Stogon\UnleashBundle\Repository\FeatureRepository;
+use Stogon\UnleashBundle\Twig\UnleashExtension;
 use Stogon\UnleashBundle\Unleash;
 use Stogon\UnleashBundle\UnleashInterface;
 
@@ -31,4 +32,9 @@ return function (ContainerConfigurator $configurator) {
 	;
 
 	$services->alias(UnleashInterface::class, Unleash::class);
+
+	$services->set(UnleashExtension::class)
+		->arg('$unleash', service(UnleashInterface::class))
+		->tag('twig.extension')
+	;
 };
