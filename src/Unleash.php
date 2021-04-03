@@ -15,14 +15,15 @@ class Unleash implements UnleashInterface
 	protected TokenStorageInterface $tokenStorage;
 	protected EventDispatcherInterface $eventDispatcher;
 	protected FeatureRepository $featureRepository;
-	protected array $strategiesMapping;
+	/** @var iterable<StrategyInterface> */
+	protected iterable $strategiesMapping;
 
 	public function __construct(
 		RequestStack $requestStack,
 		TokenStorageInterface $tokenStorage,
 		EventDispatcherInterface $eventDispatcher,
 		FeatureRepository $featureRepository,
-		array $strategiesMapping
+		iterable $strategiesMapping
 	) {
 		$this->requestStack = $requestStack;
 		$this->tokenStorage = $tokenStorage;
@@ -49,6 +50,7 @@ class Unleash implements UnleashInterface
 			return false;
 		}
 
+		$strategies = iterator_to_array($this->strategiesMapping);
 		$token = $this->tokenStorage->getToken();
 		$user = null;
 
@@ -66,20 +68,16 @@ class Unleash implements UnleashInterface
 		$context = $event->getPayload();
 
 		foreach ($feature->getStrategies() as $strategyData) {
-			$className = $strategyData['name'];
+			$strategyName = $strategyData['name'];
 
-			if (!array_key_exists($className, $this->strategiesMapping)) {
+			if (!array_key_exists($strategyName, $strategies)) {
 				return false;
 			}
 
-			if (is_callable($this->strategiesMapping[$className])) {
-				$strategy = $this->strategiesMapping[$className]();
-			} else {
-				$strategy = new $this->strategiesMapping[$className]();
-			}
+			$strategy = $strategies[$strategyName];
 
 			if (!$strategy instanceof StrategyInterface) {
-				throw new \Exception(sprintf('%s does not implement %s interface.', $className, StrategyInterface::class));
+				throw new \Exception(sprintf('%s does not implement %s interface.', $strategyName, StrategyInterface::class));
 			}
 
 			if ($strategy->isEnabled($strategyData['parameters'] ?? [], $context)) {

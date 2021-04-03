@@ -3,6 +3,7 @@
 namespace Stogon\UnleashBundle\DependencyInjection;
 
 use Stogon\UnleashBundle\Repository\FeatureRepository;
+use Stogon\UnleashBundle\Strategy\StrategyInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -21,6 +22,8 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 
 		$loader->load('services.php');
 
+		$container->registerForAutoconfiguration(StrategyInterface::class)->addTag('unleash.strategy');
+
 		$definition = $container->getDefinition(FeatureRepository::class);
 		$definition->replaceArgument('$cache', new Reference($container->getParameter('unleash.cache.service')));
 	}
@@ -34,7 +37,6 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 		$container->setParameter('unleash.api_url', $config['api_url']);
 		$container->setParameter('unleash.instance_id', $config['instance_id']);
 		$container->setParameter('unleash.environment', $config['environment']);
-		$container->setParameter('unleash.strategies', $config['strategies']);
 		$container->setParameter('unleash.cache.service', $config['cache']['service']);
 		$container->setParameter('unleash.cache.ttl', $config['cache']['enabled'] ? $config['cache']['ttl'] : 0);
 
@@ -68,5 +70,10 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 		} else {
 			$container->setParameter('unleash.cache.service', 'cache.app');
 		}
+	}
+
+	public function getAlias()
+	{
+		return 'unleash';
 	}
 }

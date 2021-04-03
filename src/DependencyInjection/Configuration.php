@@ -2,9 +2,6 @@
 
 namespace Stogon\UnleashBundle\DependencyInjection;
 
-use Stogon\UnleashBundle\Strategy\DefaultStrategy;
-use Stogon\UnleashBundle\Strategy\StrategyInterface;
-use Stogon\UnleashBundle\Strategy\UserWithIdStrategy;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -58,32 +55,6 @@ final class Configuration implements ConfigurationInterface
 							->min(0)
 							->defaultValue(15)
 						->end()
-					->end()
-				->end()
-				->arrayNode('strategies')
-					->info('Mapping of strategies name to strategy class implementation')
-					->useAttributeAsKey('name')
-					->defaultValue([
-						'default' => DefaultStrategy::class,
-						'userWithId' => UserWithIdStrategy::class,
-					])
-					->cannotBeEmpty()
-					->scalarPrototype()->end()
-					->validate()
-						->ifTrue(function (array $strategies) {
-							foreach ($strategies as $class) {
-								$implements = @class_implements($class);
-
-								if ($implements === false) {
-									return true;
-								}
-
-								if (!in_array(StrategyInterface::class, class_implements($class), true)) {
-									return true;
-								}
-							}
-						})
-						->thenInvalid('Configured strategies %s must implement "'.StrategyInterface::class.'" interface.')
 					->end()
 				->end()
 			->end()

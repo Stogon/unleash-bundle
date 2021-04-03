@@ -11,7 +11,7 @@ class UserWithIdStrategy implements StrategyInterface
 	{
 		$userIds = $parameters['userIds'] ?? [];
 
-		$ids = explode(',', $userIds);
+		$ids = array_map('trim', explode(',', $userIds));
 
 		if ($context['user']) {
 			/** @var string|\Stringable|UserInterface */
