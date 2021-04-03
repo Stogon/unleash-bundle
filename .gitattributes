@@ -1,0 +1,7 @@
+# Ignore files (like .npmignore or .gitignore)
+tests/							export-ignore
+phpunit.xml  					export-ignore
+phpstan.neon  					export-ignore
+php_cs.dist  					export-ignore
+.gitlab-ci.yml					export-ignore
+README.md						export-ignore
