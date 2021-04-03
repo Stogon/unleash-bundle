@@ -21,7 +21,7 @@ unleash:
     cache:
         enabled: true
         service: '@cache.app'
-        ttl: 15
+        ttl: 15 # in seconds
 ```
 
 TODO: Add definitions for each settings.
@@ -127,9 +127,9 @@ class MyCustomStrategy implements StrategyInterface
 Then you need to tag your custom strategy with the `unleash.strategy` tag and provide a `activation_name` for it.
 ```yaml
 services:
-	App\Unleash\Strategy\MyCustomStrategy:
-		tags:
-			- { name: unleash.strategy, activation_name: my_custom_activation_strategy }
+    App\Unleash\Strategy\MyCustomStrategy:
+        tags:
+            - { name: unleash.strategy, activation_name: my_custom_activation_strategy }
 ```
 
 > The `activation_name` must match the `strategy.name` value of your Unleash strategy !
@@ -143,9 +143,9 @@ to the same [strategy name used here](#strategies).
 Example:
 ```yaml
 services:
-	App\Unleash\Strategy\MyCustomStrategy:
-		tags:
-			- { name: unleash.strategy, activation_name: userWithId }
+    App\Unleash\Strategy\MyCustomStrategy:
+        tags:
+            - { name: unleash.strategy, activation_name: userWithId }
 ```
 
 ### Add additional context to strategies
