@@ -2,6 +2,8 @@
 
 An [Unleash](https://docs.getunleash.io/) bundle for Symfony applications.
 
+This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
+
 ## Installation
 
 ```
@@ -164,7 +166,39 @@ services:
 
 ### Add additional context to strategies
 
-TODO:
+If you want to add additional data to the context passed to resolved strategy (`$context` parameter of the `Stogon\UnleashBundle\Strategy\StrategyInterface::isEnabled` method), you can implement an event listener/subscriber to react to the `Stogon\UnleashBundle\Event\UnleashContextEvent` event.
+
+Example:
+```php
+<?php
+
+namespace App\EventSubscriber;
+
+use Stogon\UnleashBundle\Event\UnleashContextEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class UnleashContextSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return [
+            UnleashContextEvent::class => ['onUnleashContextEvent'],
+        ];
+    }
+
+    public function onUnleashContextEvent(UnleashContextEvent $event): void
+    {
+        // Get the original payload as an array;
+        $payload = $event->getPayload();
+
+        // Set some custom data
+        $payload['awesome_data'] = 'amazing';
+
+        // Update payload
+        $event->setPayload($payload);
+    }
+}
+```
 
 ## Testing
 
@@ -177,7 +211,9 @@ composer run test
 or
 
 ```
-./vendor/bin/phpunit
+$ ./vendor/bin/phpunit
+$ ./vendor/bin/phpstan analyse
+$ ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist
 ```
 
 ## Contributing
