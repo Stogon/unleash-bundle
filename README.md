@@ -15,28 +15,28 @@ Full configurations example:
 ```yaml
 # config/packages/unleash.yaml
 unleash:
-	# The full URL to your unleash-server instance.
-	# Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>
+    # The full URL to your unleash-server instance.
+    # Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>
     api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>'
 
-	# Instance ID of your unleash application.
-	# Example : VPQgqIdAxQyXY96d6oWj
+    # Instance ID of your unleash application.
+    # Example : VPQgqIdAxQyXY96d6oWj
     instance_id: '<some ID>'
 
-	# Unleash application name.
-	# For Gitlab feature flags, it can the the environment name.
-	# default: '%kernel.environment%'
+    # Unleash application name.
+    # For Gitlab feature flags, it can the the environment name.
+    # default: '%kernel.environment%'
     environment: '%kernel.environment%'
 
     cache:
-		# Enable caching of features fetched from Unleash server.
-		# default: true
+        # Enable caching of features fetched from Unleash server.
+        # default: true
         enabled: true
-		# Service ID to use for caching (must be a cache pool)
-		# default: '%unleach.cache.service%' (which resolve to '@cache.unleash.strategies' service)
+        # Service ID to use for caching (must be a cache pool)
+        # default: '%unleach.cache.service%' (which resolve to '@cache.unleash.strategies' service)
         service: '@cache.app'
-		# The period of time from the present after which the item MUST be considered expired in the cache in seconds
-		# default: 15
+        # The period of time from the present after which the item MUST be considered expired in the cache in seconds
+        # default: 15
         ttl: 15
 ```
 
