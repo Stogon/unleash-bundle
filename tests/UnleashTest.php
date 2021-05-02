@@ -23,6 +23,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class UnleashTest extends TestCase
 {
 	/**
+	 * @covers ::__construct
 	 * @covers ::getFeatures
 	 */
 	public function testGetFeatures(): void
@@ -51,6 +52,7 @@ class UnleashTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getFeature
 	 */
 	public function testGetFeature(): void
@@ -79,6 +81,7 @@ class UnleashTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getFeature
 	 */
 	public function testGetFeatureWithMissingFeature(): void
@@ -105,7 +108,10 @@ class UnleashTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::isFeatureEnabled
+	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::__construct
+	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::getPayload
 	 */
 	public function testIsFeatureEnabledWithoutDefaultValueWithAuthenticated(): void
 	{
