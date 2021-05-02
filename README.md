@@ -1,8 +1,13 @@
 # Unleash Bundle
 
+[![Packagist](https://img.shields.io/packagist/v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
+
 An [Unleash](https://docs.getunleash.io/) bundle for Symfony applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
+
+*Inspired by [minds/unleash-client-php](https://gitlab.com/minds/unleash-client-php) and [mikefrancis/laravel-unleash](https://github.com/mikefrancis/laravel-unleash).*
 
 ## Installation
 
@@ -219,3 +224,7 @@ $ ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist
 ## Contributing
 
 TODO:
+
+## Special thanks
+
+Thanks to
