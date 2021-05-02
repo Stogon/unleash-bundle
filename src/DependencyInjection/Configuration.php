@@ -13,8 +13,8 @@ final class Configuration implements ConfigurationInterface
 
 		$rootNode = $treeBuilder->getRootNode();
 
+		// @phpstan-ignore-next-line
 		$rootNode
-			// @phpstan-ignore-next-line
 			->fixXmlConfig('unleash')
 			->children()
 				->scalarNode('api_url')
