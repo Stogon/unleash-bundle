@@ -15,16 +15,30 @@ Full configurations example:
 ```yaml
 # config/packages/unleash.yaml
 unleash:
+	# The full URL to your unleash-server instance.
+	# Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>
     api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>'
-    instance_id: '<some ID>'
-    environment: '%kernel.environment%'
-    cache:
-        enabled: true
-        service: '@cache.app'
-        ttl: 15 # in seconds
-```
 
-TODO: Add definitions for each settings.
+	# Instance ID of your unleash application.
+	# Example : VPQgqIdAxQyXY96d6oWj
+    instance_id: '<some ID>'
+
+	# Unleash application name.
+	# For Gitlab feature flags, it can the the environment name.
+	# default: '%kernel.environment%'
+    environment: '%kernel.environment%'
+
+    cache:
+		# Enable caching of features fetched from Unleash server.
+		# default: true
+        enabled: true
+		# Service ID to use for caching (must be a cache pool)
+		# default: '%unleach.cache.service%' (which resolve to '@cache.unleash.strategies' service)
+        service: '@cache.app'
+		# The period of time from the present after which the item MUST be considered expired in the cache in seconds
+		# default: 15
+        ttl: 15
+```
 
 ## Usage
 
@@ -45,13 +59,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function index(UnleashInterface $unleash): Response
     {
-		if ($unleash->isFeatureEnabled('my_awesome_feature')) {
-			// do something awesome !
-		}
+        if ($unleash->isFeatureEnabled('my_awesome_feature')) {
+            // do something awesome !
+        }
 
-		if ($unleash->isFeatureDisabled('my_other_feature')) {
-			// do something else
-		}
+        if ($unleash->isFeatureDisabled('my_other_feature')) {
+            // do something else
+        }
 
         return $this->render('home/index.html.twig');
     }
@@ -65,24 +79,24 @@ The bundle also provide Twig functions to check if a feature is enabled/disabled
 ```twig
 {# Check if a feature is enabled for current user #}
 {%- if is_feature_enabled('my_awesome_feature') -%}
-	<div class="alert alert-success" role="alert">
-		The <code>my_awesome_feature</code> feature is enabled for current user !
-	</div>
+    <div class="alert alert-success" role="alert">
+        The <code>my_awesome_feature</code> feature is enabled for current user !
+    </div>
 {%- else -%}
-	<div class="alert alert-warning" role="alert">
-		The <code>my_awesome_feature</code> feature is disabled for current user !
-	</div>
+    <div class="alert alert-warning" role="alert">
+        The <code>my_awesome_feature</code> feature is disabled for current user !
+    </div>
 {%- endif -%}
 
 {# Check if a feature is disabled for current user #}
 {%- if is_feature_disabled('my_awesome_feature') -%}
-	<div class="alert alert-success" role="alert">
-		The <code>my_awesome_feature</code> feature is disabled for current user !
-	</div>
+    <div class="alert alert-success" role="alert">
+        The <code>my_awesome_feature</code> feature is disabled for current user !
+    </div>
 {%- else -%}
-	<div class="alert alert-warning" role="alert">
-		The <code>my_awesome_feature</code> feature is enabled for current user !
-	</div>
+    <div class="alert alert-warning" role="alert">
+        The <code>my_awesome_feature</code> feature is enabled for current user !
+    </div>
 {%- endif -%}
 ```
 
@@ -115,12 +129,12 @@ use Stogon\UnleashBundle\Strategy\StrategyInterface;
 
 class MyCustomStrategy implements StrategyInterface
 {
-	public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
-	{
-		// TODO: Implement your custom logic here.
+    public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+    {
+        // TODO: Implement your custom logic here.
 
-		return false;
-	}
+        return false;
+    }
 }
 ```
 
