@@ -1,6 +1,7 @@
 {
     "name": "stogon/unleash-bundle",
     "description": "Unleash SDK implementation for Symfony framework",
+	"keywords": ["symfony", "bundle", "unleash"],
     "type": "symfony-bundle",
     "require": {
         "php": "^7.4|^8.0",
