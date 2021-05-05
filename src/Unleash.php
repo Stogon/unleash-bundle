@@ -46,7 +46,7 @@ class Unleash implements UnleashInterface
 	{
 		$feature = $this->featureRepository->getFeature($name);
 
-		if ($feature === null) {
+		if ($feature === null || $feature->isDisabled()) {
 			return false;
 		}
 
