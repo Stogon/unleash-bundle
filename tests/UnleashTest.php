@@ -184,4 +184,50 @@ class UnleashTest extends TestCase
 
 		$this->assertTrue($unleash->isFeatureEnabled($featureName));
 	}
+
+	/**
+	 * @covers ::__construct
+	 * @covers ::isFeatureEnabled
+	 */
+	public function testIsFeatureEnabledWithDiabledFeature(): void
+	{
+		$featureName = 'random_feature';
+
+		$featureMock = $this->createMock(Feature::class);
+		$featureMock->expects($this->never())->method('getStrategies');
+		$featureMock->expects($this->once())
+			->method('isDisabled')
+			->willReturn(true);
+
+		$featureRepositoryMock = $this->createMock(FeatureRepository::class);
+		$featureRepositoryMock->expects($this->once())
+			->method('getFeature')
+			->with($featureName)
+			->willReturn($featureMock);
+
+		$strategyMock = $this->createMock(StrategyInterface::class);
+		$strategyMock->expects($this->never())->method('isEnabled');
+
+		$strategies = [
+			'userWithId' => $strategyMock,
+		];
+
+		$requestStackMock = $this->createMock(RequestStack::class);
+
+		$tokenStorageMock = $this->createMock(TokenStorageInterface::class);
+		$tokenStorageMock->expects($this->never())->method('getToken');
+
+		$eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+		$eventDispatcherMock->expects($this->never())->method('dispatch');
+
+		$unleash = new Unleash(
+			$requestStackMock,
+			$tokenStorageMock,
+			$eventDispatcherMock,
+			$featureRepositoryMock,
+			new ArrayIterator($strategies),
+		);
+
+		$this->assertFalse($unleash->isFeatureEnabled($featureName));
+	}
 }
