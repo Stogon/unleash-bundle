@@ -50,4 +50,4 @@ jobs:
       run: php vendor/bin/phpstan analyse --no-progress
 
     - name: Run php-cs-fixer
-      run: php vendor/bin/php-cs-fixer fix --config=.php_cs.dist --diff --dry-run
+      run: php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --dry-run
