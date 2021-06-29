@@ -23,9 +23,9 @@ Full configurations example:
 ```yaml
 # config/packages/unleash.yaml
 unleash:
-    # The full URL to your unleash-server instance.
+    # The full URL to your unleash-server instance (must end with a slash).
     # Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>
-    api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>'
+    api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/'
 
     # Instance ID of your unleash application.
     # Example : VPQgqIdAxQyXY96d6oWj

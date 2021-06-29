@@ -18,20 +18,10 @@ final class Configuration implements ConfigurationInterface
 			->fixXmlConfig('unleash')
 			->children()
 				->scalarNode('api_url')
-					->info('Unleash API endpoint')
+					->info('Unleash API endpoint. URL Must end with a slash !')
+					->example('https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/')
 					->isRequired()
 					->cannotBeEmpty()
-					->beforeNormalization()
-						->ifString()
-						// Add a trailing slash at the end of the URL
-						->then(fn ($v) => rtrim($v, '/').'/')
-					->end()
-					->validate()
-						->ifTrue(function ($value) {
-							return filter_var($value, FILTER_VALIDATE_URL) === false;
-						})
-						->thenInvalid('Invalid URL given : %s')
-					->end()
 				->end()
 				->scalarNode('instance_id')
 					->info('Unleash instance ID')
