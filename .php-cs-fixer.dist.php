@@ -5,7 +5,7 @@
  * you can change this configuration by importing this file.
  */
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setIndent("\t")
     ->setRules([
         '@Symfony' => true,
