@@ -2,6 +2,8 @@
 
 namespace Stogon\UnleashBundle;
 
+use Stogon\UnleashBundle\Strategy\StrategyInterface;
+
 interface FeatureInterface
 {
 	/**
@@ -24,5 +26,8 @@ interface FeatureInterface
 	 */
 	public function isDisabled(): bool;
 
+	/**
+	 * @return StrategyInterface[]
+	 */
 	public function getStrategies(): array;
 }

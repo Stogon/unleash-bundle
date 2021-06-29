@@ -3,6 +3,7 @@
 namespace Stogon\UnleashBundle\Strategy;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserWithIdStrategy implements StrategyInterface
@@ -26,6 +27,10 @@ class UserWithIdStrategy implements StrategyInterface
 			}
 
 			if ($currentUser instanceof UserInterface) {
+				if (Kernel::VERSION_ID >= 50300 && method_exists($currentUser, 'getUserIdentifier')) {
+					return in_array($currentUser->getUserIdentifier(), $ids, true);
+				}
+
 				return in_array($currentUser->getUsername(), $ids, true);
 			}
 

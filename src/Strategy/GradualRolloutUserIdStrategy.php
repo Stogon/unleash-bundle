@@ -3,6 +3,7 @@
 namespace Stogon\UnleashBundle\Strategy;
 
 use Stogon\UnleashBundle\Helper\ValueNormalizer;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class GradualRolloutUserIdStrategy implements StrategyInterface
@@ -38,6 +39,10 @@ class GradualRolloutUserIdStrategy implements StrategyInterface
 			}
 
 			if ($currentUser instanceof UserInterface) {
+				if (Kernel::VERSION_ID >= 50300 && method_exists($currentUser, 'getUserIdentifier')) {
+					return $currentUser->getUserIdentifier();
+				}
+
 				return $currentUser->getUsername();
 			}
 		}
