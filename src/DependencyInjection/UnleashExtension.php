@@ -47,7 +47,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 						'base_uri' => '%unleash.api_url%',
 						'headers' => [
 							'Accept' => 'application/json',
-							'UNLEASH-APPNAME' => '%kernel.environment%',
+							'UNLEASH-APPNAME' => '%unleash.environment%',
 							'UNLEASH-INSTANCEID' => '%unleash.instance_id%',
 						],
 					],
