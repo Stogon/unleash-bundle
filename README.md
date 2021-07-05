@@ -8,6 +8,8 @@ An [Unleash](https://docs.getunleash.io/) bundle for Symfony applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
 
+This implementation conforms to the official [Unleash standards](https://github.com/Unleash/client-specification).
+
 *Inspired by [minds/unleash-client-php](https://gitlab.com/minds/unleash-client-php) and [mikefrancis/laravel-unleash](https://github.com/mikefrancis/laravel-unleash).*
 
 ## Installation
@@ -24,7 +26,7 @@ Full configurations example:
 # config/packages/unleash.yaml
 unleash:
     # The full URL to your unleash-server instance (must end with a slash).
-    # Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>
+    # Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/
     api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/'
 
     # Instance ID of your unleash application.
