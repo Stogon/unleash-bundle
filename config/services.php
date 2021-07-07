@@ -36,7 +36,7 @@ return function (ContainerConfigurator $configurator) {
 	$services->set(GradualRolloutRandomStrategy::class)->tag('unleash.strategy', ['activation_name' => 'gradualRolloutRandom']);
 
 	$services->set(FeatureRepository::class)
-		->arg('$httpClient', function_exists('service') ? service(UnleashHttpClient::class) : ref(UnleashHttpClient::class))
+		->arg('$httpClient', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(UnleashHttpClient::class) : ref(UnleashHttpClient::class))
 		->arg('$cache', '%unleash.cache.service%')
 		->arg('$ttl', '%unleash.cache.ttl%')
 		->autowire(true)
@@ -51,7 +51,7 @@ return function (ContainerConfigurator $configurator) {
 	$services->alias(UnleashInterface::class, Unleash::class);
 
 	$services->set(UnleashExtension::class)
-		->arg('$unleash', function_exists('service') ? service(UnleashInterface::class) : ref(UnleashInterface::class))
+		->arg('$unleash', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(UnleashInterface::class) : ref(UnleashInterface::class))
 		->tag('twig.extension')
 	;
 };
