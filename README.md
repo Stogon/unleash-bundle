@@ -4,7 +4,7 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![License](https://img.shields.io/github/license/Stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 
-An [Unleash](https://docs.getunleash.io/) bundle for Symfony applications.
+An [Unleash](https://docs.getunleash.io/) bundle for Symfony 4.4 and 5+  applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
 
@@ -221,7 +221,7 @@ or
 ```
 $ ./vendor/bin/phpunit
 $ ./vendor/bin/phpstan analyse
-$ ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist
+$ ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php
 ```
 
 ## Contributing
