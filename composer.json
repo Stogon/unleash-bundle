@@ -5,6 +5,7 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^7.4|^8.0",
+		"lastguest/murmurhash": "^2.1",
         "symfony/cache-contracts": "^2.4",
         "symfony/config": "^4.4|^5.2",
         "symfony/dependency-injection": "^4.4|^5.2",

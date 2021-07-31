@@ -2,6 +2,8 @@
 
 namespace Stogon\UnleashBundle\Helper;
 
+use lastguest\Murmur;
+
 class ValueNormalizer
 {
 	/**
