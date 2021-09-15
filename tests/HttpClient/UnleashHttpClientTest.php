@@ -15,6 +15,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class UnleashHttpClientTest extends TestCase
 {
 	/**
+	 * @covers ::__construct
 	 * @covers ::fetchFeatures
 	 */
 	public function testFetchFeaturesRequestThrows(): void
@@ -39,6 +40,7 @@ class UnleashHttpClientTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::fetchFeatures
 	 */
 	public function testFetchFeaturesToArrayThrows(): void
@@ -68,6 +70,7 @@ class UnleashHttpClientTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::fetchFeatures
 	 */
 	public function testFetchFeaturesArrayFeatureKeyExists(): void
@@ -98,6 +101,7 @@ class UnleashHttpClientTest extends TestCase
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::fetchFeatures
 	 */
 	public function testFetchFeaturesReturnsDefault(): void
