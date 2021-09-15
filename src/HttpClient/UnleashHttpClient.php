@@ -21,9 +21,12 @@ class UnleashHttpClient
 
 	public function fetchFeatures(): array
 	{
-		$response = $this->httpClient->request('GET', 'client/features');
-
-		$features = $response->toArray();
+		try {
+			$response = $this->httpClient->request('GET', 'client/features');
+			$features = $response->toArray();
+		} catch (\Throwable $exception) {
+			return [];
+		}
 
 		if (array_key_exists('features', $features)) {
 			return $features['features'];
