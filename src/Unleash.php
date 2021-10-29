@@ -71,7 +71,13 @@ class Unleash implements UnleashInterface
 		$token = $this->tokenStorage->getToken();
 		$user = null;
 
-		if ($token !== null && $token->isAuthenticated()) {
+		if (Kernel::VERSION_ID >= 50400) {
+			$authenticated = $token !== null;
+		} else {
+			$authenticated = $token !== null && $token->isAuthenticated();
+		}
+
+		if ($authenticated) {
 			$user = $token->getUser();
 
 			$this->logger->debug('Using authenticated user from token', [
