@@ -2,11 +2,15 @@
 
 namespace Stogon\UnleashBundle\HttpClient;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class UnleashHttpClient
+class UnleashHttpClient implements LoggerAwareInterface
 {
 	private HttpClientInterface $httpClient;
+	protected LoggerInterface $logger;
 	protected string $apiUrl;
 	protected string $instanceId;
 	protected string $environment;
@@ -17,6 +21,7 @@ class UnleashHttpClient
 		$this->apiUrl = $apiUrl;
 		$this->instanceId = $instanceId;
 		$this->environment = $environment;
+		$this->logger = new NullLogger();
 	}
 
 	public function fetchFeatures(): array
@@ -24,14 +29,27 @@ class UnleashHttpClient
 		try {
 			$response = $this->httpClient->request('GET', 'client/features');
 			$features = $response->toArray();
-		} catch (\Throwable $exception) {
+		} catch (\Throwable $th) {
+			$this->logger->critical('Could not fetch features flags', [
+				'exception' => $th,
+			]);
+
 			return [];
 		}
 
 		if (array_key_exists('features', $features)) {
+			$this->logger->debug('Fetched feature flags from remote', [
+				'feature_flags' => $features['features'],
+			]);
+
 			return $features['features'];
 		}
 
 		return [];
+	}
+
+	public function setLogger(LoggerInterface $logger): void
+	{
+		$this->logger = $logger;
 	}
 }
