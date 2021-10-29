@@ -50,7 +50,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 							'Accept' => 'application/json',
 							'UNLEASH-APPNAME' => '%unleash.environment%',
 							'UNLEASH-INSTANCEID' => '%unleash.instance_id%',
-							'Authorization' => $config['auth_token'] ?? null
+							'Authorization' => '%unleash.auth_token%',
 						],
 					],
 				],

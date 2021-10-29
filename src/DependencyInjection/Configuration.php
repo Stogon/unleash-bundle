@@ -25,7 +25,6 @@ final class Configuration implements ConfigurationInterface
 				->end()
 				->scalarNode('auth_token')
 					->info('Unleash auth token')
-					->isRequired()
 					->cannotBeEmpty()
 				->end()
 				->scalarNode('instance_id')
