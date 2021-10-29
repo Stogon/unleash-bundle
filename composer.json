@@ -1,11 +1,11 @@
 {
     "name": "stogon/unleash-bundle",
     "description": "Unleash SDK implementation for Symfony framework",
-	"keywords": ["symfony", "bundle", "unleash", "feature-flags"],
+    "keywords": ["symfony", "bundle", "unleash", "feature-flags"],
     "type": "symfony-bundle",
     "require": {
         "php": "^7.4|^8.0",
-		"lastguest/murmurhash": "^2.1",
+        "lastguest/murmurhash": "^2.1",
         "symfony/cache-contracts": "^2.4",
         "symfony/config": "^4.4|^5.2",
         "symfony/dependency-injection": "^4.4|^5.2",
@@ -19,7 +19,7 @@
         "symfony/var-dumper": "^4.4|^5.2",
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^0.12.65",
-		"psr/log": "^1|^2|^3",
+        "psr/log": "^1|^2|^3",
         "friendsofphp/php-cs-fixer": "^3.0"
     },
     "scripts": {
