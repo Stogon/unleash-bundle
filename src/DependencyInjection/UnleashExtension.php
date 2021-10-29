@@ -35,6 +35,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 		$config = $this->processConfiguration($configuration, $container->getExtensionConfig($this->getAlias()));
 
 		$container->setParameter('unleash.api_url', $config['api_url']);
+		$container->setParameter('unleash.auth_token', $config['auth_token'] ?? null);
 		$container->setParameter('unleash.instance_id', $config['instance_id']);
 		$container->setParameter('unleash.environment', $config['environment']);
 		$container->setParameter('unleash.cache.service', $config['cache']['service']);
@@ -49,6 +50,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 							'Accept' => 'application/json',
 							'UNLEASH-APPNAME' => '%unleash.environment%',
 							'UNLEASH-INSTANCEID' => '%unleash.instance_id%',
+							'Authorization' => '%unleash.auth_token%',
 						],
 					],
 				],
