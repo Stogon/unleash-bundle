@@ -25,6 +25,8 @@ return function (ContainerConfigurator $configurator) {
 		->arg('$instanceId', '%unleash.instance_id%')
 		->arg('$environment', '%unleash.environment%')
 		->autowire(true)
+		->call('setLogger', [\function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service('logger')->ignoreOnInvalid() : ref('logger')->ignoreOnInvalid()])
+		->tag('monolog.logger', ['channel' => 'unleash'])
 	;
 
 	// Strategies definitions
@@ -46,6 +48,7 @@ return function (ContainerConfigurator $configurator) {
 	$services->set(Unleash::class)
 		->arg('$strategiesMapping', tagged_iterator('unleash.strategy', 'activation_name'))
 		->autowire(true)
+		->tag('monolog.logger', ['channel' => 'unleash'])
 	;
 
 	$services->alias(UnleashInterface::class, Unleash::class);
