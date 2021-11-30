@@ -149,7 +149,7 @@ class UnleashTest extends TestCase
 
 		$requestStackMock = $this->createMock(RequestStack::class);
 		if (Kernel::VERSION_ID >= 50300) {
-			$requestStackMock->expects($this->once())
+			$requestStackMock
 				->method('getMainRequest')
 				->willReturn($requestMock);
 		} else {
@@ -162,8 +162,7 @@ class UnleashTest extends TestCase
 
 		$tokenMock = $this->createMock(TokenInterface::class);
 		if (method_exists(TokenInterface::class, 'isAuthenticated')) {
-			$tokenMock->expects($this->once())
-				->method('isAuthenticated')
+			$tokenMock->method('isAuthenticated')
 				->willReturn(true);
 		}
 		$tokenMock->expects($this->once())
