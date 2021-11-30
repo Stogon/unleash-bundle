@@ -161,9 +161,11 @@ class UnleashTest extends TestCase
 		$userMock = $this->createMock(UserInterface::class);
 
 		$tokenMock = $this->createMock(TokenInterface::class);
-		$tokenMock->expects($this->once())
-			->method('isAuthenticated')
-			->willReturn(true);
+		if (method_exists(TokenInterface::class, 'isAuthenticated')) {
+			$tokenMock->expects($this->once())
+				->method('isAuthenticated')
+				->willReturn(true);
+		}
 		$tokenMock->expects($this->once())
 			->method('getUser')
 			->willReturn($userMock);

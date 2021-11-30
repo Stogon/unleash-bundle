@@ -17,6 +17,12 @@ class UserWithIdStrategyTest extends TestCase
 	 */
 	public function testIsEnabledWithUsername(array $parameters, string $username, bool $expected): void
 	{
+		if (!method_exists(UserInterface::class, 'getUsername')) {
+			$this->markTestSkipped(sprintf('"%s" does not provide the "getUsername" method anymore.', UserInterface::class));
+
+			return;
+		}
+
 		$userMock = $this->createMock(UserInterface::class);
 		$userMock->method('getUsername')->willReturn($username);
 

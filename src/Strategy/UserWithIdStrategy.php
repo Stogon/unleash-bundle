@@ -31,6 +31,7 @@ class UserWithIdStrategy implements StrategyInterface
 					return in_array($currentUser->getUserIdentifier(), $ids, false);
 				}
 
+				// @phpstan-ignore-next-line
 				return in_array($currentUser->getUsername(), $ids, false);
 			}
 

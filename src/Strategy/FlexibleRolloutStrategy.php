@@ -67,6 +67,7 @@ class FlexibleRolloutStrategy implements StrategyInterface
 					return $currentUser->getUserIdentifier();
 				}
 
+				// @phpstan-ignore-next-line
 				return $currentUser->getUsername();
 			}
 		}
