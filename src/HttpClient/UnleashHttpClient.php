@@ -48,7 +48,10 @@ class UnleashHttpClient implements LoggerAwareInterface
 		return [];
 	}
 
-	public function setLogger(LoggerInterface $logger): void
+	/**
+	 * @return void
+	 */
+	public function setLogger(LoggerInterface $logger)
 	{
 		$this->logger = $logger;
 	}

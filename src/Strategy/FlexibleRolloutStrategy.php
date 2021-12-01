@@ -4,7 +4,6 @@ namespace Stogon\UnleashBundle\Strategy;
 
 use Stogon\UnleashBundle\Helper\ValueNormalizer;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class FlexibleRolloutStrategy implements StrategyInterface
@@ -63,7 +62,7 @@ class FlexibleRolloutStrategy implements StrategyInterface
 			}
 
 			if ($currentUser instanceof UserInterface) {
-				if (Kernel::VERSION_ID >= 50300 && method_exists($currentUser, 'getUserIdentifier')) {
+				if (method_exists($currentUser, 'getUserIdentifier')) {
 					return $currentUser->getUserIdentifier();
 				}
 
