@@ -74,7 +74,6 @@ class Unleash implements UnleashInterface
 		if (Kernel::VERSION_ID >= 50400) {
 			$authenticated = $token !== null;
 		} else {
-			// @phpstan-ignore-next-line
 			$authenticated = $token !== null && $token->isAuthenticated();
 		}
 
@@ -97,7 +96,6 @@ class Unleash implements UnleashInterface
 			]);
 		} else {
 			$event = new UnleashContextEvent([
-				// @phpstan-ignore-next-line
 				'request' => $this->requestStack->getMasterRequest(),
 				'user' => $user,
 			]);
