@@ -49,7 +49,7 @@ class UnleashHttpClient implements LoggerAwareInterface
 	}
 
 	/**
-	 * @return void
+	 * @return void|null
 	 */
 	public function setLogger(LoggerInterface $logger)
 	{

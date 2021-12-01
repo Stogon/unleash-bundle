@@ -9,7 +9,6 @@ use Stogon\UnleashBundle\Repository\FeatureRepository;
 use Stogon\UnleashBundle\Strategy\StrategyInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class Unleash implements UnleashInterface
@@ -71,7 +70,7 @@ class Unleash implements UnleashInterface
 		$token = $this->tokenStorage->getToken();
 		$user = null;
 
-		if (!method_exists(TokenInterface::class, 'isAuthenticated')) {
+		if (!method_exists($token, 'isAuthenticated')) {
 			$authenticated = $token !== null;
 		} else {
 			$authenticated = $token !== null && $token->isAuthenticated();
@@ -89,7 +88,7 @@ class Unleash implements UnleashInterface
 			]);
 		}
 
-		if (method_exists(RequestStack::class, 'getMainRequest')) {
+		if (method_exists($this->requestStack, 'getMainRequest')) {
 			$event = new UnleashContextEvent([
 				'request' => $this->requestStack->getMainRequest(),
 				'user' => $user,
