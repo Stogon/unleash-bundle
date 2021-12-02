@@ -4,7 +4,7 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![License](https://img.shields.io/github/license/Stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 
-An [Unleash](https://docs.getunleash.io/) bundle for Symfony 4.4 and 5.2+  applications.
+An [Unleash](https://docs.getunleash.io/) bundle for Symfony 4.4, 5.2+ and 6+  applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
 
