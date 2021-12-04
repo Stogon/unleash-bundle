@@ -74,7 +74,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 		}
 	}
 
-	public function getAlias()
+	public function getAlias(): string
 	{
 		return 'unleash';
 	}

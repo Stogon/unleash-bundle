@@ -4,7 +4,6 @@ namespace Stogon\UnleashBundle\Tests\Strategy;
 
 use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Strategy\UserWithIdStrategy;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @coversDefaultClass \Stogon\UnleashBundle\Strategy\UserWithIdStrategy
@@ -15,28 +14,14 @@ class UserWithIdStrategyTest extends TestCase
 	 * @dataProvider usernameProvider
 	 * @covers ::isEnabled
 	 */
-	public function testIsEnabledWithUsername(array $parameters, string $username, bool $expected): void
-	{
-		$userMock = $this->createMock(UserInterface::class);
-		$userMock->method('getUsername')->willReturn($username);
-
-		$context = [
-			'user' => $userMock,
-		];
-
-		$strategy = new UserWithIdStrategy();
-
-		$this->assertEquals($expected, $strategy->isEnabled($parameters, $context));
-	}
-
-	/**
-	 * @dataProvider usernameProvider
-	 * @covers ::isEnabled
-	 */
 	public function testIsEnabledWithUserIdentifier(array $parameters, string $username, bool $expected): void
 	{
 		$userMock = $this->createMock(User::class);
-		$userMock->method('getUserIdentifier')->willReturn($username);
+		if (method_exists(User::class, 'getUserIdentifier')) {
+			$userMock->method('getUserIdentifier')->willReturn($username);
+		} else {
+			$userMock->method('getUsername')->willReturn($username);
+		}
 
 		$context = [
 			'user' => $userMock,

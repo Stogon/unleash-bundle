@@ -4,13 +4,19 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Test Symfony bundle using PHP ${{ matrix.php-versions }}
+    name: Test Symfony bundle using PHP ${{ matrix.php-versions }} and ${{ matrix.dependencies }} dependencies
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+        dependencies:
+          - "lowest"
+          - "highest"
 
     steps:
     - uses: actions/checkout@v2
@@ -40,8 +46,11 @@ jobs:
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
-    - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --optimize-autoloader
+    - uses: "ramsey/composer-install@v1"
+      name: Install Composer dependencies
+      with:
+        dependency-versions: "${{ matrix.dependencies }}"
+        composer-options: "${{ matrix.composer-options }}"
 
     - name: Run Tests
       run: php vendor/bin/phpunit --coverage-text
@@ -50,4 +59,6 @@ jobs:
       run: php vendor/bin/phpstan analyse --no-progress
 
     - name: Run php-cs-fixer
+      env:
+        PHP_CS_FIXER_IGNORE_ENV: true
       run: php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --dry-run

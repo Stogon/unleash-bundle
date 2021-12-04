@@ -20,7 +20,7 @@ class User implements UserInterface
 		return $this->id;
 	}
 
-	public function getRoles()
+	public function getRoles(): array
 	{
 		return ['ROLE_USER'];
 	}
@@ -44,7 +44,7 @@ class User implements UserInterface
 		return $this->username;
 	}
 
-	public function getUserIdentifier()
+	public function getUserIdentifier(): string
 	{
 		return $this->username;
 	}
