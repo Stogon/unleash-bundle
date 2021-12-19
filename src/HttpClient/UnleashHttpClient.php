@@ -3,14 +3,15 @@
 namespace Stogon\UnleashBundle\HttpClient;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UnleashHttpClient implements LoggerAwareInterface
 {
+	use LoggerAwareTrait;
+
 	private HttpClientInterface $httpClient;
-	protected LoggerInterface $logger;
 	protected string $apiUrl;
 	protected string $instanceId;
 	protected string $environment;
@@ -46,13 +47,5 @@ class UnleashHttpClient implements LoggerAwareInterface
 		}
 
 		return [];
-	}
-
-	/**
-	 * @return void|null
-	 */
-	public function setLogger(LoggerInterface $logger)
-	{
-		$this->logger = $logger;
 	}
 }
