@@ -114,6 +114,82 @@ class UnleashTest extends TestCase
 	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::__construct
 	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::getPayload
 	 */
+	public function testIsFeatureEnabledWithoutDefaultValueWithUnauthenticated(): void
+	{
+		$featureName = 'random_feature';
+
+		$featureMock = $this->createMock(Feature::class);
+		$featureMock->expects($this->once())
+			->method('getStrategies')
+			->willReturn([
+				[
+					'name' => 'userWithId',
+					'parameters' => [
+						'userIds' => 'admin,user1,user2',
+					],
+				],
+			]);
+
+		$featureRepositoryMock = $this->createMock(FeatureRepository::class);
+		$featureRepositoryMock->expects($this->once())
+			->method('getFeature')
+			->with($featureName)
+			->willReturn($featureMock);
+
+		$strategyMock = $this->createMock(StrategyInterface::class);
+		$strategyMock->expects($this->once())
+			->method('isEnabled')
+			->willReturn(true);
+
+		$strategies = [
+			'userWithId' => $strategyMock,
+		];
+
+		$requestMock = $this->createMock(Request::class);
+
+		$requestStackMock = $this->createMock(RequestStack::class);
+		if (Kernel::VERSION_ID >= 50300) {
+			$requestStackMock
+				->method('getMainRequest')
+				->willReturn($requestMock);
+		} else {
+			$requestStackMock->expects($this->once())
+				->method('getMasterRequest')
+				->willReturn($requestMock);
+		}
+
+		$userMock = $this->createMock(UserInterface::class);
+
+		$tokenStorageMock = $this->createMock(TokenStorageInterface::class);
+		$tokenStorageMock->expects($this->once())
+			->method('getToken')
+			->willReturn(null);
+
+		$eventMock = $this->createMock(UnleashContextEvent::class);
+
+		$eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+		$eventDispatcherMock->expects($this->once())
+			->method('dispatch')
+			->with($this->isInstanceOf(UnleashContextEvent::class))
+			->willReturn($eventMock);
+
+		$unleash = new Unleash(
+			$requestStackMock,
+			$tokenStorageMock,
+			$eventDispatcherMock,
+			$featureRepositoryMock,
+			new ArrayIterator($strategies),
+		);
+
+		$this->assertTrue($unleash->isFeatureEnabled($featureName));
+	}
+
+	/**
+	 * @covers ::__construct
+	 * @covers ::isFeatureEnabled
+	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::__construct
+	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::getPayload
+	 */
 	public function testIsFeatureEnabledWithoutDefaultValueWithAuthenticated(): void
 	{
 		$featureName = 'random_feature';
