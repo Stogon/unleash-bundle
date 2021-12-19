@@ -70,7 +70,7 @@ class Unleash implements UnleashInterface
 		$token = $this->tokenStorage->getToken();
 		$user = null;
 
-		if (!method_exists($token, 'isAuthenticated')) {
+		if ($token === null || !method_exists($token, 'isAuthenticated')) {
 			$authenticated = $token !== null;
 		} else {
 			$authenticated = $token !== null && $token->isAuthenticated();

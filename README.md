@@ -29,6 +29,9 @@ unleash:
     # Example with the "feature_flags" feature from Gitlab.com : https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/
     api_url: 'https://gitlab.com/api/v4/feature_flags/unleash/<project_id>/'
 
+    # Authorization key if needed
+    auth_token: '<auth>'
+
     # Instance ID of your unleash application.
     # Example : VPQgqIdAxQyXY96d6oWj
     instance_id: '<some ID>'
