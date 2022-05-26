@@ -34,10 +34,15 @@ class FetchFeaturesCommand extends Command
 
 		$io->text('Fetching features from remote...');
 
-		$features = $this->featureRepository->getFeatures();
+		$this->featureRepository->getFeatures();
 
 		$io->success('Features fetched from remote and stored in the cache.');
 
-		return Command::SUCCESS;
+		if (\defined(Command::class.'::SUCCESS')) {
+			// @phpstan-ignore-next-line
+			return Command::SUCCESS;
+		}
+
+		return 0;
 	}
 }

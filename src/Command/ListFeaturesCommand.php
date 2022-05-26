@@ -38,7 +38,12 @@ class ListFeaturesCommand extends Command
 		if (empty($features)) {
 			$io->warning('There is no feature available.');
 
-			return Command::SUCCESS;
+			if (\defined(Command::class.'::SUCCESS')) {
+				// @phpstan-ignore-next-line
+				return Command::SUCCESS;
+			}
+
+			return 0;
 		}
 
 		$io->table([
@@ -55,6 +60,11 @@ class ListFeaturesCommand extends Command
 			];
 		}, $features));
 
-		return Command::SUCCESS;
+		if (\defined(Command::class.'::SUCCESS')) {
+			// @phpstan-ignore-next-line
+			return Command::SUCCESS;
+		}
+
+		return 0;
 	}
 }
