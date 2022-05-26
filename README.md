@@ -113,6 +113,15 @@ The bundle also provide Twig functions to check if a feature is enabled/disabled
 {%- endif -%}
 ```
 
+### Console
+
+There are console commands that comes with this bundle :
+
+| Command name | Description |
+|--------------|-------------|
+| `unleash:features:fetch` | Fetch Unleash features from remote and store them in the cache for later usage. |
+| `unleash:features:list` | List available Unleash features from remote. |
+
 ## Strategies
 
 Available strategies:
