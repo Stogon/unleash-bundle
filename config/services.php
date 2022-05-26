@@ -2,6 +2,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Stogon\UnleashBundle\Cache\FeatureCacheWarmer;
 use Stogon\UnleashBundle\HttpClient\UnleashHttpClient;
 use Stogon\UnleashBundle\Repository\FeatureRepository;
 use Stogon\UnleashBundle\Strategy\DefaultStrategy;
@@ -56,5 +57,10 @@ return function (ContainerConfigurator $configurator) {
 	$services->set(UnleashExtension::class)
 		->arg('$unleash', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(UnleashInterface::class) : ref(UnleashInterface::class))
 		->tag('twig.extension')
+	;
+
+	$services->set(FeatureCacheWarmer::class)
+		->arg('$featureRepository', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(FeatureRepository::class) : ref(FeatureRepository::class))
+		->tag('kernel.cache_warmer', ['priority' => 0])
 	;
 };
