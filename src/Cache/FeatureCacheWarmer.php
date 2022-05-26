@@ -39,9 +39,7 @@ if (Kernel::VERSION_ID >= 50000) {
 		}
 
 		/**
-		 * @param string $cacheDir
-		 *
-		 * @return array
+		 * {@inheritDoc}
 		 */
 		public function warmUp($cacheDir)
 		{

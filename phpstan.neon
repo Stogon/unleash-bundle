@@ -7,3 +7,5 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername\(\)\.#'
         - '#Call to an undefined method Symfony\\Component\\HttpFoundation\\RequestStack::getMasterRequest\(\)\.#'
+    excludePaths:
+        - src/Cache/FeatureCacheWarmer.php
