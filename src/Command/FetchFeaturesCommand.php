@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+// @phpstan-ignore-next-line
+#[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:fetch', 'Fetch Unleash features from remote and store them in the cache for later usage.')]
 class FetchFeaturesCommand extends Command
 {
 	protected static $defaultName = 'unleash:features:fetch';

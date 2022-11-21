@@ -2,7 +2,6 @@
 
 namespace Stogon\UnleashBundle\Tests;
 
-use ArrayIterator;
 use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Event\UnleashContextEvent;
 use Stogon\UnleashBundle\Feature;
@@ -43,7 +42,7 @@ class UnleashTest extends TestCase
 			$this->createMock(TokenStorageInterface::class),
 			$this->createMock(EventDispatcherInterface::class),
 			$featureRepositoryMock,
-			new ArrayIterator([]),
+			new \ArrayIterator([]),
 		);
 
 		$features = $unleash->getFeatures();
@@ -73,7 +72,7 @@ class UnleashTest extends TestCase
 			$this->createMock(TokenStorageInterface::class),
 			$this->createMock(EventDispatcherInterface::class),
 			$featureRepositoryMock,
-			new ArrayIterator([]),
+			new \ArrayIterator([]),
 		);
 
 		$feature = $unleash->getFeature($name);
@@ -100,7 +99,7 @@ class UnleashTest extends TestCase
 			$this->createMock(TokenStorageInterface::class),
 			$this->createMock(EventDispatcherInterface::class),
 			$featureRepositoryMock,
-			new ArrayIterator([]),
+			new \ArrayIterator([]),
 		);
 
 		$feature = $unleash->getFeature($name);
@@ -178,7 +177,7 @@ class UnleashTest extends TestCase
 			$tokenStorageMock,
 			$eventDispatcherMock,
 			$featureRepositoryMock,
-			new ArrayIterator($strategies),
+			new \ArrayIterator($strategies),
 		);
 
 		$this->assertTrue($unleash->isFeatureEnabled($featureName));
@@ -263,7 +262,7 @@ class UnleashTest extends TestCase
 			$tokenStorageMock,
 			$eventDispatcherMock,
 			$featureRepositoryMock,
-			new ArrayIterator($strategies),
+			new \ArrayIterator($strategies),
 		);
 
 		$this->assertTrue($unleash->isFeatureEnabled($featureName));
@@ -309,7 +308,7 @@ class UnleashTest extends TestCase
 			$tokenStorageMock,
 			$eventDispatcherMock,
 			$featureRepositoryMock,
-			new ArrayIterator($strategies),
+			new \ArrayIterator($strategies),
 		);
 
 		$this->assertFalse($unleash->isFeatureEnabled($featureName));

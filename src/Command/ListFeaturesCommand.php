@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+// @phpstan-ignore-next-line
+#[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:list', 'List available Unleash features from remote.')]
 class ListFeaturesCommand extends Command
 {
 	protected static $defaultName = 'unleash:features:list';
