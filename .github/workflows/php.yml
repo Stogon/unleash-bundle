@@ -19,7 +19,7 @@ jobs:
           - "highest"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP, with composer and extensions
       uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
@@ -37,20 +37,19 @@ jobs:
 
     - name: Get composer cache directory
       id: composer-cache
-      run: echo "{dir}={$(composer config cache-files-dir)}" >> $GITHUB_OUTPUT
+      run: echo "DIR={$(composer config cache-files-dir)}" >> $GITHUB_OUTPUT
 
     - name: Cache composer dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
-        path: ${{ steps.composer-cache.outputs.dir }}
+        path: ${{ steps.composer-cache.outputs.DIR }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
-    - uses: "ramsey/composer-install@v1"
+    - uses: "ramsey/composer-install@v2"
       name: Install Composer dependencies
       with:
         dependency-versions: "${{ matrix.dependencies }}"
-        composer-options: "${{ matrix.composer-options }}"
 
     - name: Run Tests
       run: php vendor/bin/phpunit --coverage-text
