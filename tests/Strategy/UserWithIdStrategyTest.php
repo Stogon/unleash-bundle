@@ -12,6 +12,7 @@ class UserWithIdStrategyTest extends TestCase
 {
 	/**
 	 * @dataProvider usernameProvider
+	 *
 	 * @covers ::isEnabled
 	 */
 	public function testIsEnabledWithUserIdentifier(array $parameters, string $username, bool $expected): void
@@ -61,6 +62,7 @@ class UserWithIdStrategyTest extends TestCase
 
 	/**
 	 * @dataProvider idProvider
+	 *
 	 * @covers ::isEnabled
 	 */
 	public function testIsEnabledWithId(array $parameters, $id, bool $expected): void
