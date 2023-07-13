@@ -38,7 +38,7 @@ unleash:
     instance_id: '<some ID>'
 
     # Unleash application name.
-    # For Gitlab feature flags, it can the environment name.
+    # For Gitlab feature flags, it can be set to the environment name.
     # default: '%kernel.environment%'
     environment: '%kernel.environment%'
 
@@ -200,7 +200,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UnleashContextSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UnleashContextEvent::class => ['onUnleashContextEvent'],
@@ -239,4 +239,4 @@ $ ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php
 
 ## Contributing
 
-TODO:
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
