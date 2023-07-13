@@ -38,7 +38,7 @@ unleash:
     instance_id: '<some ID>'
 
     # Unleash application name.
-    # For Gitlab feature flags, it can the the environment name.
+    # For Gitlab feature flags, it can the environment name.
     # default: '%kernel.environment%'
     environment: '%kernel.environment%'
 
