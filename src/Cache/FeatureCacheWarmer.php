@@ -38,9 +38,6 @@ if (Kernel::VERSION_ID >= 50000) {
 			$this->featureRepository = $featureRepository;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 */
 		public function warmUp($cacheDir)
 		{
 			$this->featureRepository->getFeatures();

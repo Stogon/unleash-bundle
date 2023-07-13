@@ -3,6 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![License](https://img.shields.io/github/license/Stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
+[![codecov](https://img.shields.io/codecov/c/github/Stogon/unleash-bundle/master?token=NI6FM0TCMS&style=for-the-badge)](https://codecov.io/gh/Stogon/unleash-bundle)
 
 An [Unleash](https://docs.getunleash.io/) bundle for Symfony 4.4, 5.4+ and 6+ applications.
 
