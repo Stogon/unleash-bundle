@@ -52,8 +52,23 @@ jobs:
       with:
         dependency-versions: "${{ matrix.dependencies }}"
 
-    - name: Run Tests
-      run: php vendor/bin/phpunit --coverage-text
+    - name: Run PHPUnit Tests
+      uses: php-actions/phpunit@v3
+      env:
+        XDEBUG_MODE: coverage
+      with:
+        bootstrap: vendor/autoload.php
+        configuration: phpunit.xml
+        php_extensions: xdebug
+        args: tests --coverage-text --coverage-clover ./coverage.xml
+
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: unittests
+        files: ./coverage.xml
+        verbose: true
 
     - name: Run PHPStan
       run: php vendor/bin/phpstan analyse --no-progress
