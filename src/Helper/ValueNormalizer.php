@@ -17,6 +17,11 @@ class ValueNormalizer
 			return $min - 1;
 		}
 
+		if (PHP_VERSION_ID >= 80100) {
+			// Use native murmur3a hash if supported
+			return ((int) base_convert(hash('murmur3a', "{$id}:{$groupId}"), 32, 10) % $normalizer) + $min;
+		}
+
 		return (Murmur::hash3_int("{$id}:{$groupId}") % $normalizer) + $min;
 	}
 }
