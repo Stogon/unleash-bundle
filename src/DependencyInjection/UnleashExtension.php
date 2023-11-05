@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class UnleashExtension extends Extension implements PrependExtensionInterface
 {
-	public function load(array $configs, ContainerBuilder $container)
+	public function load(array $configs, ContainerBuilder $container): void
 	{
 		$loader = new PhpFileLoader(
 			$container,
@@ -28,7 +28,7 @@ class UnleashExtension extends Extension implements PrependExtensionInterface
 		$definition->replaceArgument('$cache', new Reference($container->getParameter('unleash.cache.service')));
 	}
 
-	public function prepend(ContainerBuilder $container)
+	public function prepend(ContainerBuilder $container): void
 	{
 		$configuration = new Configuration();
 
