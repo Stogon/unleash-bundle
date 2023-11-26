@@ -12,15 +12,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:fetch', 'Fetch Unleash features from remote and store them in the cache for later usage.')]
 class FetchFeaturesCommand extends Command
 {
-	protected static $defaultName = 'unleash:features:fetch';
-
 	private FeatureRepository $featureRepository;
 
 	public function __construct(FeatureRepository $featureRepository)
 	{
 		$this->featureRepository = $featureRepository;
 
-		parent::__construct();
+		parent::__construct('unleash:features:fetch');
 	}
 
 	protected function configure(): void

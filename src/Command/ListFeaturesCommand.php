@@ -13,15 +13,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:list', 'List available Unleash features from remote.')]
 class ListFeaturesCommand extends Command
 {
-	protected static $defaultName = 'unleash:features:list';
-
 	private FeatureRepository $featureRepository;
 
 	public function __construct(FeatureRepository $featureRepository)
 	{
 		$this->featureRepository = $featureRepository;
 
-		parent::__construct();
+		parent::__construct('unleash:features:list');
 	}
 
 	protected function configure(): void
