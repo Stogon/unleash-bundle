@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/Stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![codecov](https://img.shields.io/codecov/c/github/Stogon/unleash-bundle/master?token=NI6FM0TCMS&style=for-the-badge)](https://codecov.io/gh/Stogon/unleash-bundle)
 
-An [Unleash](https://docs.getunleash.io/) bundle for Symfony 4.4, 5.4+ and 6+ applications.
+An [Unleash](https://docs.getunleash.io/) bundle for Symfony 5.4+ and 6.4+ applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
 

@@ -70,15 +70,8 @@ class Unleash implements UnleashInterface
 		$token = $this->tokenStorage->getToken();
 		$user = null;
 
-		if ($token === null || !method_exists($token, 'isAuthenticated')) {
-			$authenticated = $token !== null;
-		} else {
-			$authenticated = $token !== null && $token->isAuthenticated();
-		}
-
-		if ($authenticated) {
+		if ($token !== null) {
 			$user = $token->getUser();
-
 			$this->logger->debug('Using authenticated user from token', [
 				'name' => $name,
 				'feature' => $feature,
@@ -88,17 +81,10 @@ class Unleash implements UnleashInterface
 			]);
 		}
 
-		if (method_exists($this->requestStack, 'getMainRequest')) {
-			$event = new UnleashContextEvent([
-				'request' => $this->requestStack->getMainRequest(),
-				'user' => $user,
-			]);
-		} else {
-			$event = new UnleashContextEvent([
-				'request' => $this->requestStack->getMasterRequest(),
-				'user' => $user,
-			]);
-		}
+		$event = new UnleashContextEvent([
+			'request' => $this->requestStack->getMainRequest(),
+			'user' => $user,
+		]);
 
 		$this->eventDispatcher->dispatch($event);
 

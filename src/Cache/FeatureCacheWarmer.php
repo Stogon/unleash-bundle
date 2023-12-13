@@ -4,50 +4,25 @@ namespace Stogon\UnleashBundle\Cache;
 
 use Stogon\UnleashBundle\Repository\FeatureRepository;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
-if (Kernel::VERSION_ID >= 50000) {
-	class FeatureCacheWarmer implements CacheWarmerInterface
+class FeatureCacheWarmer implements CacheWarmerInterface
+{
+	private FeatureRepository $featureRepository;
+
+	public function __construct(FeatureRepository $featureRepository)
 	{
-		private FeatureRepository $featureRepository;
-
-		public function __construct(FeatureRepository $featureRepository)
-		{
-			$this->featureRepository = $featureRepository;
-		}
-
-		public function warmUp(string $cacheDir): array
-		{
-			$this->featureRepository->getFeatures();
-
-			return [];
-		}
-
-		public function isOptional(): bool
-		{
-			return true;
-		}
+		$this->featureRepository = $featureRepository;
 	}
-} else {
-	class FeatureCacheWarmer implements CacheWarmerInterface
+
+	public function warmUp(string $cacheDir, string $buildDir = null): array
 	{
-		private FeatureRepository $featureRepository;
+		$this->featureRepository->getFeatures();
 
-		public function __construct(FeatureRepository $featureRepository)
-		{
-			$this->featureRepository = $featureRepository;
-		}
+		return [];
+	}
 
-		public function warmUp($cacheDir)
-		{
-			$this->featureRepository->getFeatures();
-
-			return [];
-		}
-
-		public function isOptional(): bool
-		{
-			return true;
-		}
+	public function isOptional(): bool
+	{
+		return true;
 	}
 }

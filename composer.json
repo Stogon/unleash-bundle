@@ -8,20 +8,21 @@
         "php": "^7.4|^8.0",
         "lastguest/murmurhash": "^2.1",
         "symfony/cache-contracts": "^2.4|^3.0",
-        "symfony/config": "^4.4|^5.4|^6.0",
-        "symfony/dependency-injection": "^4.4|^5.4|^6.0",
-        "symfony/event-dispatcher-contracts": "^1.1|^2.4|^3.0",
+        "symfony/config": "^5.4|^6.4",
+        "symfony/console": "^5.4|^6.4",
+        "symfony/dependency-injection": "^5.4|^6.4",
+        "symfony/event-dispatcher-contracts": "^2.4|^3.0",
         "symfony/http-client-contracts": "^2.4|^3.0",
-        "symfony/http-kernel": "^4.4|^5.4.20|^6.0",
-        "symfony/security-core": "^4.4|^5.4|^6.0",
+        "symfony/http-kernel": "^5.4.20|^6.4",
+        "symfony/security-core": "^5.4|^6.4",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^4.4|^5.4|^6.0",
-        "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^1.0.0",
+        "symfony/var-dumper": "^5.4|^6.4",
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^1.10.0",
         "psr/log": "^1|^2|^3",
-        "friendsofphp/php-cs-fixer": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3.41"
     },
     "scripts": {
         "cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --dry-run",

@@ -14,26 +14,22 @@ class UserWithIdStrategy implements StrategyInterface
 		$ids = array_map('trim', explode(',', $userIds));
 
 		if ($context['user']) {
-			/** @var string|\Stringable|UserInterface */
+			/** @var UserInterface */
 			$currentUser = $context['user'];
-
-			if (is_string($currentUser)) {
-				return in_array($currentUser, $ids, false);
-			}
 
 			if (method_exists($currentUser, 'getId') && in_array($currentUser->getId(), $ids, false)) {
 				return true;
 			}
 
-			if ($currentUser instanceof UserInterface) {
-				if (method_exists($currentUser, 'getUserIdentifier')) {
-					return in_array($currentUser->getUserIdentifier(), $ids, false);
-				}
-
-				return in_array($currentUser->getUsername(), $ids, false);
+			if (!$currentUser instanceof UserInterface) {
+				return false;
 			}
 
-			return in_array((string) $currentUser, $ids, false);
+			if (method_exists($currentUser, 'getUserIdentifier')) {
+				return in_array($currentUser->getUserIdentifier(), $ids, false);
+			}
+
+			return in_array($currentUser->getUsername(), $ids, false);
 		}
 
 		/** @var Request */

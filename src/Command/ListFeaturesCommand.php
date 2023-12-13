@@ -4,13 +4,13 @@ namespace Stogon\UnleashBundle\Command;
 
 use Stogon\UnleashBundle\FeatureInterface;
 use Stogon\UnleashBundle\Repository\FeatureRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-// @phpstan-ignore-next-line
-#[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:list', 'List available Unleash features from remote.')]
+#[AsCommand('unleash:features:list', 'List available Unleash features from remote.')]
 class ListFeaturesCommand extends Command
 {
 	private FeatureRepository $featureRepository;
@@ -38,12 +38,7 @@ class ListFeaturesCommand extends Command
 		if (empty($features)) {
 			$io->warning('There is no feature available.');
 
-			if (\defined(Command::class.'::SUCCESS')) {
-				// @phpstan-ignore-next-line
-				return Command::SUCCESS;
-			}
-
-			return 0;
+			return Command::SUCCESS;
 		}
 
 		$io->table([
@@ -60,11 +55,6 @@ class ListFeaturesCommand extends Command
 			];
 		}, $features));
 
-		if (\defined(Command::class.'::SUCCESS')) {
-			// @phpstan-ignore-next-line
-			return Command::SUCCESS;
-		}
-
-		return 0;
+		return Command::SUCCESS;
 	}
 }
