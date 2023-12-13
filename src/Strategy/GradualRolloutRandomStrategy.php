@@ -12,10 +12,6 @@ class GradualRolloutRandomStrategy implements StrategyInterface
 		$groupId = trim($parameters['groupId'] ?? '');
 		$randomId = sprintf('%s', mt_rand(1, 100));
 
-		if (!$randomId) {
-			return false;
-		}
-
 		$randomIdValue = ValueNormalizer::build($randomId, $groupId);
 
 		return $percentage > 0 && $randomIdValue <= $percentage;
