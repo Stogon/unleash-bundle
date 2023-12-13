@@ -25,24 +25,15 @@ class GradualRolloutUserIdStrategy implements StrategyInterface
 	protected function getUserId(array $context): ?string
 	{
 		if (array_key_exists('user', $context) && $context['user'] !== null) {
-			/** @var string|\Stringable|UserInterface */
+			/** @var UserInterface */
 			$currentUser = $context['user'];
-
-			// This means user is anonymous
-			if (is_string($currentUser)) {
-				return null;
-			}
 
 			if (method_exists($currentUser, 'getId')) {
 				return $currentUser->getId();
 			}
 
 			if ($currentUser instanceof UserInterface) {
-				if (method_exists($currentUser, 'getUserIdentifier')) {
-					return $currentUser->getUserIdentifier();
-				}
-
-				return $currentUser->getUsername();
+				return $currentUser->getUserIdentifier();
 			}
 		}
 

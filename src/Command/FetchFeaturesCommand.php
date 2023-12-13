@@ -3,13 +3,13 @@
 namespace Stogon\UnleashBundle\Command;
 
 use Stogon\UnleashBundle\Repository\FeatureRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-// @phpstan-ignore-next-line
-#[\Symfony\Component\Console\Attribute\AsCommand('unleash:features:fetch', 'Fetch Unleash features from remote and store them in the cache for later usage.')]
+#[AsCommand('unleash:features:fetch', 'Fetch Unleash features from remote and store them in the cache for later usage.')]
 class FetchFeaturesCommand extends Command
 {
 	private FeatureRepository $featureRepository;
@@ -38,11 +38,6 @@ class FetchFeaturesCommand extends Command
 
 		$io->success('Features fetched from remote and stored in the cache.');
 
-		if (\defined(Command::class.'::SUCCESS')) {
-			// @phpstan-ignore-next-line
-			return Command::SUCCESS;
-		}
-
-		return 0;
+		return Command::SUCCESS;
 	}
 }

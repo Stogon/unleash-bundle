@@ -28,7 +28,7 @@ return function (ContainerConfigurator $configurator) {
 		->arg('$instanceId', '%unleash.instance_id%')
 		->arg('$environment', '%unleash.environment%')
 		->autowire(true)
-		->call('setLogger', [\function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service('logger')->ignoreOnInvalid() : ref('logger')->ignoreOnInvalid()])
+		->call('setLogger', [service('logger')->ignoreOnInvalid()])
 		->tag('monolog.logger', ['channel' => 'unleash'])
 	;
 
@@ -41,7 +41,7 @@ return function (ContainerConfigurator $configurator) {
 	$services->set(GradualRolloutRandomStrategy::class)->tag('unleash.strategy', ['activation_name' => 'gradualRolloutRandom']);
 
 	$services->set(FeatureRepository::class)
-		->arg('$httpClient', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(UnleashHttpClient::class) : ref(UnleashHttpClient::class))
+		->arg('$httpClient', service(UnleashHttpClient::class))
 		->arg('$cache', '%unleash.cache.service%')
 		->arg('$ttl', '%unleash.cache.ttl%')
 		->autowire(true)
@@ -57,22 +57,22 @@ return function (ContainerConfigurator $configurator) {
 	$services->alias(UnleashInterface::class, Unleash::class);
 
 	$services->set(UnleashExtension::class)
-		->arg('$unleash', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(UnleashInterface::class) : ref(UnleashInterface::class))
+		->arg('$unleash', service(UnleashInterface::class))
 		->tag('twig.extension')
 	;
 
 	$services->set(FeatureCacheWarmer::class)
-		->arg('$featureRepository', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(FeatureRepository::class) : ref(FeatureRepository::class))
+		->arg('$featureRepository', service(FeatureRepository::class))
 		->tag('kernel.cache_warmer', ['priority' => 0])
 	;
 
 	$services->set(FetchFeaturesCommand::class)
-		->arg('$featureRepository', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(FeatureRepository::class) : ref(FeatureRepository::class))
+		->arg('$featureRepository', service(FeatureRepository::class))
 		->tag('console.command')
 	;
 
 	$services->set(ListFeaturesCommand::class)
-		->arg('$featureRepository', \function_exists('Symfony\Component\DependencyInjection\Loader\Configurator\service') ? service(FeatureRepository::class) : ref(FeatureRepository::class))
+		->arg('$featureRepository', service(FeatureRepository::class))
 		->tag('console.command')
 	;
 };

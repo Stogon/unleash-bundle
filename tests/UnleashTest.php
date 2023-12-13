@@ -11,7 +11,6 @@ use Stogon\UnleashBundle\Strategy\StrategyInterface;
 use Stogon\UnleashBundle\Unleash;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -147,17 +146,9 @@ class UnleashTest extends TestCase
 		$requestMock = $this->createMock(Request::class);
 
 		$requestStackMock = $this->createMock(RequestStack::class);
-		if (Kernel::VERSION_ID >= 50300) {
-			$requestStackMock
-				->method('getMainRequest')
-				->willReturn($requestMock);
-		} else {
-			$requestStackMock->expects($this->once())
-				->method('getMasterRequest')
-				->willReturn($requestMock);
-		}
-
-		$userMock = $this->createMock(UserInterface::class);
+		$requestStackMock
+			->method('getMainRequest')
+			->willReturn($requestMock);
 
 		$tokenStorageMock = $this->createMock(TokenStorageInterface::class);
 		$tokenStorageMock->expects($this->once())
@@ -223,15 +214,9 @@ class UnleashTest extends TestCase
 		$requestMock = $this->createMock(Request::class);
 
 		$requestStackMock = $this->createMock(RequestStack::class);
-		if (Kernel::VERSION_ID >= 50300) {
-			$requestStackMock
-				->method('getMainRequest')
-				->willReturn($requestMock);
-		} else {
-			$requestStackMock->expects($this->once())
-				->method('getMasterRequest')
-				->willReturn($requestMock);
-		}
+		$requestStackMock
+			->method('getMainRequest')
+			->willReturn($requestMock);
 
 		$userMock = $this->createMock(UserInterface::class);
 

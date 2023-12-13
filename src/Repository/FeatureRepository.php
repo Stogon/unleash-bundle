@@ -25,12 +25,12 @@ class FeatureRepository
 	 */
 	public function getFeatures(): array
 	{
-		return $this->cache->get('unleash.strategies', function (ItemInterface $item) {
+		return $this->cache->get('unleash.strategies', function (ItemInterface $item): array {
 			$features = $this->client->fetchFeatures();
 
 			$item->expiresAfter($this->ttl);
 
-			return array_map(function (array $feature) {
+			return array_map(function (array $feature): Feature {
 				return new Feature(
 					$feature['name'],
 					$feature['description'],
@@ -45,7 +45,7 @@ class FeatureRepository
 	{
 		$features = $this->getFeatures();
 
-		$filtered = array_filter($features, fn (Feature $f) => $f->getName() === $name);
+		$filtered = array_filter($features, fn (Feature $f): bool => $f->getName() === $name);
 
 		if (!empty($filtered)) {
 			return $filtered[array_key_first($filtered)];
