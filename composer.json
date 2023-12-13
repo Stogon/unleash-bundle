@@ -22,7 +22,7 @@
         "phpunit/phpunit": "^9.6",
         "phpstan/phpstan": "^1.10.0",
         "psr/log": "^1|^2|^3",
-        "friendsofphp/php-cs-fixer": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3.41"
     },
     "scripts": {
         "cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --dry-run",

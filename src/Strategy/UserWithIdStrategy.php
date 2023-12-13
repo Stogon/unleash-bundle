@@ -22,7 +22,11 @@ class UserWithIdStrategy implements StrategyInterface
 			}
 
 			if ($currentUser instanceof UserInterface) {
-				return in_array($currentUser->getUserIdentifier(), $ids, false);
+				if (method_exists($currentUser, 'getUserIdentifier')) {
+					return in_array($currentUser->getUserIdentifier(), $ids, false);
+				}
+
+				return in_array($currentUser->getUsername(), $ids, false);
 			}
 
 			return in_array((string) $currentUser, $ids, false);

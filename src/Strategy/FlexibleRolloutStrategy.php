@@ -57,7 +57,11 @@ class FlexibleRolloutStrategy implements StrategyInterface
 			}
 
 			if ($currentUser instanceof UserInterface) {
-				return $currentUser->getUserIdentifier();
+				if (method_exists($currentUser, 'getUserIdentifier')) {
+					return $currentUser->getUserIdentifier();
+				}
+
+				return $currentUser->getUsername();
 			}
 		}
 
