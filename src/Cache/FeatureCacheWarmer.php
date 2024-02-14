@@ -14,7 +14,7 @@ class FeatureCacheWarmer implements CacheWarmerInterface
 		$this->featureRepository = $featureRepository;
 	}
 
-	public function warmUp(string $cacheDir, string $buildDir = null): array
+	public function warmUp(string $cacheDir, ?string $buildDir = null): array
 	{
 		$this->featureRepository->getFeatures();
 

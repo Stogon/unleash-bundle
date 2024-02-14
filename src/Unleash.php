@@ -27,7 +27,7 @@ class Unleash implements UnleashInterface
 		EventDispatcherInterface $eventDispatcher,
 		FeatureRepository $featureRepository,
 		iterable $strategiesMapping,
-		LoggerInterface $logger = null
+		?LoggerInterface $logger = null
 	) {
 		$this->requestStack = $requestStack;
 		$this->tokenStorage = $tokenStorage;
