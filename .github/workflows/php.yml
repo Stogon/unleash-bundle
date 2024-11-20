@@ -75,6 +75,8 @@ jobs:
         verbose: true
 
     - name: Run PHPStan
+      env:
+        XDEBUG_MODE: off
       run: php vendor/bin/phpstan analyse --no-progress
 
     - name: Run php-cs-fixer
