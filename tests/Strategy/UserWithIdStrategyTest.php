@@ -33,7 +33,7 @@ class UserWithIdStrategyTest extends TestCase
 		$this->assertEquals($expected, $strategy->isEnabled($parameters, $context));
 	}
 
-	public function usernameProvider(): array
+	public static function usernameProvider(): array
 	{
 		return [
 			[
@@ -79,7 +79,7 @@ class UserWithIdStrategyTest extends TestCase
 		$this->assertEquals($expected, $strategy->isEnabled($parameters, $context));
 	}
 
-	public function idProvider(): array
+	public static function idProvider(): array
 	{
 		return [
 			[
