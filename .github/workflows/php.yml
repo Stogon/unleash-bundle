@@ -58,10 +58,13 @@ jobs:
       env:
         XDEBUG_MODE: coverage
       with:
-        bootstrap: vendor/autoload.php
-        configuration: phpunit.xml
-        php_extensions: xdebug
-        args: tests --coverage-text --coverage-clover ./coverage.xml
+        version: "composer"
+        php_version: "${{ matrix.php-versions }}"
+        bootstrap: "vendor/autoload.php"
+        configuration: "./phpunit.xml"
+        php_extensions: "xdebug"
+        coverage_text: true
+        coverage_clover: "coverage.xml"
 
     - name: Upload to Codecov
       uses: codecov/codecov-action@v3
