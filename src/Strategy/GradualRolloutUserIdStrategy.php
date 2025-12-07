@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class GradualRolloutUserIdStrategy implements StrategyInterface
 {
-	public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+	public function isEnabled(array $parameters = [], array $context = [], mixed ...$args): bool
 	{
 		$percentage = intval($parameters['percentage'] ?? 0);
 		$groupId = trim($parameters['groupId'] ?? '');
@@ -25,19 +25,13 @@ class GradualRolloutUserIdStrategy implements StrategyInterface
 	protected function getUserId(array $context): ?string
 	{
 		if (array_key_exists('user', $context) && $context['user'] !== null) {
-			/** @var UserInterface */
 			$currentUser = $context['user'];
-
-			if (method_exists($currentUser, 'getId')) {
-				return $currentUser->getId();
+			if ($currentUser instanceof UserInterface) {
+				return $currentUser->getUserIdentifier();
 			}
 
-			if ($currentUser instanceof UserInterface) {
-				if (method_exists($currentUser, 'getUserIdentifier')) {
-					return $currentUser->getUserIdentifier();
-				}
-
-				return $currentUser->getUsername();
+			if (is_object($currentUser) && method_exists($currentUser, 'getId')) {
+				return $currentUser->getId();
 			}
 		}
 

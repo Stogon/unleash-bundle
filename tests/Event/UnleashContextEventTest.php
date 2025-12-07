@@ -5,15 +5,9 @@ namespace Stogon\UnleashBundle\Tests\Event;
 use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Event\UnleashContextEvent;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\Event\UnleashContextEvent
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(UnleashContextEvent::class)]
 class UnleashContextEventTest extends TestCase
 {
-	/**
-	 * @covers ::__construct
-	 * @covers ::getPayload
-	 */
 	public function testConstruct(): void
 	{
 		$event = new UnleashContextEvent([
@@ -24,11 +18,6 @@ class UnleashContextEventTest extends TestCase
 		$this->assertContains('random_value', $event->getPayload());
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::getPayload
-	 * @covers ::setPayload
-	 */
 	public function testSetPayload(): void
 	{
 		$event = new UnleashContextEvent([

@@ -9,15 +9,11 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class FeatureRepository
 {
-	protected UnleashHttpClient $client;
-	protected CacheInterface $cache;
-	protected int $ttl;
-
-	public function __construct(UnleashHttpClient $httpClient, CacheInterface $cache, int $ttl)
-	{
-		$this->client = $httpClient;
-		$this->cache = $cache;
-		$this->ttl = $ttl;
+	public function __construct(
+		protected readonly UnleashHttpClient $client,
+		protected readonly CacheInterface $cache,
+		protected int $ttl
+	) {
 	}
 
 	/**
@@ -30,14 +26,12 @@ class FeatureRepository
 
 			$item->expiresAfter($this->ttl);
 
-			return array_map(function (array $feature): Feature {
-				return new Feature(
-					$feature['name'],
-					$feature['description'],
-					$feature['enabled'],
-					$feature['strategies']
-				);
-			}, $features);
+			return array_map(fn (array $feature): Feature => new Feature(
+				$feature['name'],
+				$feature['description'],
+				$feature['enabled'],
+				$feature['strategies']
+			), $features);
 		});
 	}
 

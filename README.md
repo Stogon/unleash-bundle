@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/Stogon/unleash-bundle.svg?style=for-the-badge)](https://packagist.org/packages/stogon/unleash-bundle)
 [![codecov](https://img.shields.io/codecov/c/github/Stogon/unleash-bundle/master?token=NI6FM0TCMS&style=for-the-badge)](https://codecov.io/gh/Stogon/unleash-bundle)
 
-An [Unleash](https://docs.getunleash.io/) bundle for Symfony 5.4+, 6.4+ and 7.0+ applications.
+An [Unleash](https://docs.getunleash.io/) bundle for Symfony 6.4+ and 7.4+ applications.
 
 This provide an easy way to implement **feature flags** using [Gitlab Feature Flags Feature](https://docs.gitlab.com/ee/operations/feature_flags.html).
 
@@ -66,7 +66,7 @@ namespace App\Controller;
 use Stogon\UnleashBundle\UnleashInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
@@ -152,7 +152,7 @@ use Stogon\UnleashBundle\Strategy\StrategyInterface;
 
 class MyCustomStrategy implements StrategyInterface
 {
-    public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+    public function isEnabled(array $parameters = [], array $context = [], mixed ...$args): bool
     {
         // TODO: Implement your custom logic here.
 

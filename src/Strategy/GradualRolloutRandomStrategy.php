@@ -6,7 +6,7 @@ use Stogon\UnleashBundle\Helper\ValueNormalizer;
 
 class GradualRolloutRandomStrategy implements StrategyInterface
 {
-	public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+	public function isEnabled(array $parameters = [], array $context = [], mixed ...$args): bool
 	{
 		$percentage = intval($parameters['percentage'] ?? 0);
 		$groupId = trim($parameters['groupId'] ?? '');

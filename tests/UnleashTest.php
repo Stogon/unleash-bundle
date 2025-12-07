@@ -16,15 +16,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\Unleash
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(Unleash::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(UnleashContextEvent::class)]
 class UnleashTest extends TestCase
 {
-	/**
-	 * @covers ::__construct
-	 * @covers ::getFeatures
-	 */
 	public function testGetFeatures(): void
 	{
 		$featureMock1 = $this->createMock(FeatureInterface::class);
@@ -50,10 +45,6 @@ class UnleashTest extends TestCase
 		$this->assertContainsOnlyInstancesOf(FeatureInterface::class, $features);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::getFeature
-	 */
 	public function testGetFeature(): void
 	{
 		$name = 'super_feature';
@@ -79,10 +70,6 @@ class UnleashTest extends TestCase
 		$this->assertSame($featureMock, $feature);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::getFeature
-	 */
 	public function testGetFeatureWithMissingFeature(): void
 	{
 		$name = 'random_feature';
@@ -106,12 +93,6 @@ class UnleashTest extends TestCase
 		$this->assertNull($feature);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureEnabled
-	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::__construct
-	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::getPayload
-	 */
 	public function testIsFeatureEnabledWithoutDefaultValueWithUnauthenticated(): void
 	{
 		$featureName = 'random_feature';
@@ -174,12 +155,6 @@ class UnleashTest extends TestCase
 		$this->assertTrue($unleash->isFeatureEnabled($featureName));
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureEnabled
-	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::__construct
-	 * @covers \Stogon\UnleashBundle\Event\UnleashContextEvent::getPayload
-	 */
 	public function testIsFeatureEnabledWithoutDefaultValueWithAuthenticated(): void
 	{
 		$featureName = 'random_feature';
@@ -253,10 +228,6 @@ class UnleashTest extends TestCase
 		$this->assertTrue($unleash->isFeatureEnabled($featureName));
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureEnabled
-	 */
 	public function testIsFeatureEnabledWithDiabledFeature(): void
 	{
 		$featureName = 'random_feature';

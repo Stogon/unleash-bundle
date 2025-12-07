@@ -1,18 +1,13 @@
 <?php
 
-namespace Stogon\UnleashBundle\Tests\Strategy;
+namespace Stogon\UnleashBundle\Tests\Strategy\Fixtures;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
-	private $id;
-	private string $username;
-
-	public function __construct($id, string $username)
+	public function __construct(private $id, private readonly string $username)
 	{
-		$this->id = $id;
-		$this->username = $username;
 	}
 
 	public function getId()

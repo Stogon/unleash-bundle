@@ -9,15 +9,9 @@ use Symfony\Contracts\HttpClient\Exception\TimeoutExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\HttpClient\UnleashHttpClient
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(UnleashHttpClient::class)]
 class UnleashHttpClientTest extends TestCase
 {
-	/**
-	 * @covers ::__construct
-	 * @covers ::fetchFeatures
-	 */
 	public function testFetchFeaturesRequestThrows(): void
 	{
 		$httpClient = $this->createMock(HttpClientInterface::class);
@@ -39,10 +33,6 @@ class UnleashHttpClientTest extends TestCase
 		self::assertEquals([], $result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::fetchFeatures
-	 */
 	public function testFetchFeaturesToArrayThrows(): void
 	{
 		$response = $this->createMock(ResponseInterface::class);
@@ -69,10 +59,6 @@ class UnleashHttpClientTest extends TestCase
 		self::assertEquals([], $result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::fetchFeatures
-	 */
 	public function testFetchFeaturesArrayFeatureKeyExists(): void
 	{
 		$response = $this->createMock(ResponseInterface::class);
@@ -100,10 +86,6 @@ class UnleashHttpClientTest extends TestCase
 		self::assertEquals(['foo', 'bar'], $result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::fetchFeatures
-	 */
 	public function testFetchFeaturesReturnsDefault(): void
 	{
 		$response = $this->createMock(ResponseInterface::class);
