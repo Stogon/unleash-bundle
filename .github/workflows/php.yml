@@ -58,7 +58,7 @@ jobs:
       env:
         XDEBUG_MODE: coverage
       with:
-        version: 9.6
+        version: 10.5
         php_version: "${{ matrix.php-versions }}"
         bootstrap: "vendor/autoload.php"
         configuration: "./phpunit.xml"
