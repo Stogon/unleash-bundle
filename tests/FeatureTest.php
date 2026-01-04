@@ -6,19 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Feature;
 use Stogon\UnleashBundle\Strategy\StrategyInterface;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\Feature
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(Feature::class)]
 class FeatureTest extends TestCase
 {
-	/**
-	 * @covers ::__construct
-	 * @covers ::getName
-	 * @covers ::getDescription
-	 * @covers ::isEnabled
-	 * @covers ::isDisabled
-	 * @covers ::getStrategies
-	 */
 	public function testConstruct(): void
 	{
 		$strategies = [

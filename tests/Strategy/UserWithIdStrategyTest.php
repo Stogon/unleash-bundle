@@ -4,25 +4,17 @@ namespace Stogon\UnleashBundle\Tests\Strategy;
 
 use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Strategy\UserWithIdStrategy;
+use Stogon\UnleashBundle\Tests\Strategy\Fixtures\SimpleUser;
+use Stogon\UnleashBundle\Tests\Strategy\Fixtures\User;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\Strategy\UserWithIdStrategy
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(UserWithIdStrategy::class)]
 class UserWithIdStrategyTest extends TestCase
 {
-	/**
-	 * @dataProvider usernameProvider
-	 *
-	 * @covers ::isEnabled
-	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('usernameProvider')]
 	public function testIsEnabledWithUserIdentifier(array $parameters, string $username, bool $expected): void
 	{
 		$userMock = $this->createMock(User::class);
-		if (method_exists(User::class, 'getUserIdentifier')) {
-			$userMock->method('getUserIdentifier')->willReturn($username);
-		} else {
-			$userMock->method('getUsername')->willReturn($username);
-		}
+		$userMock->method('getUserIdentifier')->willReturn($username);
 
 		$context = [
 			'user' => $userMock,
@@ -60,14 +52,10 @@ class UserWithIdStrategyTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider idProvider
-	 *
-	 * @covers ::isEnabled
-	 */
-	public function testIsEnabledWithId(array $parameters, $id, bool $expected): void
+	#[\PHPUnit\Framework\Attributes\DataProvider('idProvider')]
+	public function testIsEnabledWithId(array $parameters, int|string $id, bool $expected): void
 	{
-		$userMock = $this->createMock(User::class);
+		$userMock = $this->createMock(SimpleUser::class);
 		$userMock->method('getId')->willReturn($id);
 
 		$context = [
@@ -82,21 +70,21 @@ class UserWithIdStrategyTest extends TestCase
 	public static function idProvider(): array
 	{
 		return [
-			[
+			'with string identifier' => [
 				[
 					'userIds' => '1,2,3',
 				],
 				'1',
 				true,
 			],
-			[
+			'with numeric identifier' => [
 				[
 					'userIds' => '1,2,3',
 				],
 				2,
 				true,
 			],
-			[
+			'with unknown identifier' => [
 				[
 					'userIds' => '1,2,3',
 				],

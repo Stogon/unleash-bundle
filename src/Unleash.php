@@ -13,27 +13,19 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class Unleash implements UnleashInterface
 {
-	protected RequestStack $requestStack;
-	protected TokenStorageInterface $tokenStorage;
-	protected EventDispatcherInterface $eventDispatcher;
-	protected FeatureRepository $featureRepository;
-	/** @var iterable<StrategyInterface> */
-	protected iterable $strategiesMapping;
 	protected LoggerInterface $logger;
 
+	/**
+	 * @param iterable<string, StrategyInterface> $strategiesMapping
+	 */
 	public function __construct(
-		RequestStack $requestStack,
-		TokenStorageInterface $tokenStorage,
-		EventDispatcherInterface $eventDispatcher,
-		FeatureRepository $featureRepository,
-		iterable $strategiesMapping,
+		protected readonly RequestStack $requestStack,
+		protected readonly TokenStorageInterface $tokenStorage,
+		protected readonly EventDispatcherInterface $eventDispatcher,
+		protected readonly FeatureRepository $featureRepository,
+		protected readonly iterable $strategiesMapping,
 		?LoggerInterface $logger = null
 	) {
-		$this->requestStack = $requestStack;
-		$this->tokenStorage = $tokenStorage;
-		$this->eventDispatcher = $eventDispatcher;
-		$this->featureRepository = $featureRepository;
-		$this->strategiesMapping = $strategiesMapping;
 		$this->logger = $logger ?: new NullLogger();
 	}
 
@@ -66,6 +58,7 @@ class Unleash implements UnleashInterface
 			'name' => $name,
 		]);
 
+		/** @var array<string, StrategyInterface> */
 		$strategies = iterator_to_array($this->strategiesMapping);
 		$token = $this->tokenStorage->getToken();
 		$user = null;
@@ -99,6 +92,7 @@ class Unleash implements UnleashInterface
 
 			$strategy = $strategies[$strategyName];
 
+			// @phpstan-ignore-next-line
 			if (!$strategy instanceof StrategyInterface) {
 				throw new \Exception(sprintf('%s does not implement %s interface.', $strategyName, StrategyInterface::class));
 			}

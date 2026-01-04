@@ -13,12 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand('unleash:features:list', 'List available Unleash features from remote.')]
 class ListFeaturesCommand extends Command
 {
-	private FeatureRepository $featureRepository;
-
-	public function __construct(FeatureRepository $featureRepository)
+	public function __construct(private readonly FeatureRepository $featureRepository)
 	{
-		$this->featureRepository = $featureRepository;
-
 		parent::__construct('unleash:features:list');
 	}
 
@@ -44,9 +40,7 @@ class ListFeaturesCommand extends Command
 		$io->table([
 			'Name', 'Description', 'Stategies',
 		], array_map(function (FeatureInterface $feature): array {
-			$strategiesName = array_map(function (array $strategy): string {
-				return $strategy['name'];
-			}, $feature->getStrategies());
+			$strategiesName = array_map(fn (array $strategy): string => $strategy['name'], $feature->getStrategies());
 
 			return [
 				$feature->getName(),

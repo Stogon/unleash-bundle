@@ -7,11 +7,8 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class FeatureCacheWarmer implements CacheWarmerInterface
 {
-	private FeatureRepository $featureRepository;
-
-	public function __construct(FeatureRepository $featureRepository)
+	public function __construct(private readonly FeatureRepository $featureRepository)
 	{
-		$this->featureRepository = $featureRepository;
 	}
 
 	public function warmUp(string $cacheDir, ?string $buildDir = null): array

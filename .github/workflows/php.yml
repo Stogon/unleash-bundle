@@ -11,17 +11,17 @@ jobs:
       fail-fast: false
       matrix:
         php-versions:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
+          - '8.5'
         dependencies:
           - "lowest"
           - "highest"
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - name: Setup PHP, with composer and extensions
       uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
@@ -42,23 +42,23 @@ jobs:
       run: echo "DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache composer dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.DIR }}
         key: ${{ runner.os }}-composer-${{ matrix.php-versions }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
-    - uses: "ramsey/composer-install@v2"
+    - uses: "ramsey/composer-install@v3"
       name: Install Composer dependencies
       with:
         dependency-versions: "${{ matrix.dependencies }}"
 
     - name: Run PHPUnit Tests
-      uses: php-actions/phpunit@v3
+      uses: php-actions/phpunit@v4
       env:
         XDEBUG_MODE: coverage
       with:
-        version: 9.6
+        version: 10.5
         php_version: "${{ matrix.php-versions }}"
         bootstrap: "vendor/autoload.php"
         configuration: "./phpunit.xml"
@@ -67,7 +67,7 @@ jobs:
         args: --coverage-text
 
     - name: Upload to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         flags: unittests

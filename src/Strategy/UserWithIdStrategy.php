@@ -7,34 +7,27 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserWithIdStrategy implements StrategyInterface
 {
-	public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+	public function isEnabled(array $parameters = [], array $context = [], mixed ...$args): bool
 	{
 		$userIds = $parameters['userIds'] ?? [];
 
-		$ids = array_map('trim', explode(',', $userIds));
+		$ids = array_map('trim', explode(',', (string) $userIds));
 
 		if ($context['user']) {
-			/** @var UserInterface */
 			$currentUser = $context['user'];
 
-			if (method_exists($currentUser, 'getId') && in_array($currentUser->getId(), $ids, false)) {
-				return true;
-			}
-
-			if (!$currentUser instanceof UserInterface) {
-				return false;
-			}
-
-			if (method_exists($currentUser, 'getUserIdentifier')) {
+			if ($currentUser instanceof UserInterface) {
 				return in_array($currentUser->getUserIdentifier(), $ids, false);
 			}
 
-			return in_array($currentUser->getUsername(), $ids, false);
+			if (is_object($currentUser) && method_exists($currentUser, 'getId') && in_array($currentUser->getId(), $ids, false)) {
+				return true;
+			}
 		}
 
-		/** @var Request */
-		$request = $context['request'];
+		/** @var Request|null */
+		$request = $context['request'] ?? null;
 
-		return in_array($request->getUser(), $ids, false);
+		return in_array($request?->getUser(), $ids, false);
 	}
 }

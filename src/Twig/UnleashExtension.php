@@ -8,18 +8,15 @@ use Twig\TwigFunction;
 
 class UnleashExtension extends AbstractExtension
 {
-	protected UnleashInterface $unleash;
-
-	public function __construct(UnleashInterface $unleash)
+	public function __construct(protected readonly UnleashInterface $unleash)
 	{
-		$this->unleash = $unleash;
 	}
 
 	public function getFunctions(): array
 	{
 		return [
-			new TwigFunction('is_feature_enabled', [$this, 'isFeatureEnabled']),
-			new TwigFunction('is_feature_disabled', [$this, 'isFeatureDisabled']),
+			new TwigFunction('is_feature_enabled', $this->isFeatureEnabled(...)),
+			new TwigFunction('is_feature_disabled', $this->isFeatureDisabled(...)),
 		];
 	}
 

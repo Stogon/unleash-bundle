@@ -11,17 +11,12 @@ class UnleashHttpClient implements LoggerAwareInterface
 {
 	use LoggerAwareTrait;
 
-	private HttpClientInterface $httpClient;
-	protected string $apiUrl;
-	protected string $instanceId;
-	protected string $environment;
-
-	public function __construct(HttpClientInterface $unleashClient, string $apiUrl, string $instanceId, string $environment)
-	{
-		$this->httpClient = $unleashClient;
-		$this->apiUrl = $apiUrl;
-		$this->instanceId = $instanceId;
-		$this->environment = $environment;
+	public function __construct(
+		private readonly HttpClientInterface $httpClient,
+		protected readonly string $apiUrl,
+		protected readonly string $instanceId,
+		protected readonly string $environment
+	) {
 		$this->logger = new NullLogger();
 	}
 

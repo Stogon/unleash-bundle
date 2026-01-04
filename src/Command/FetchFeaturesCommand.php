@@ -12,12 +12,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand('unleash:features:fetch', 'Fetch Unleash features from remote and store them in the cache for later usage.')]
 class FetchFeaturesCommand extends Command
 {
-	private FeatureRepository $featureRepository;
-
-	public function __construct(FeatureRepository $featureRepository)
+	public function __construct(private readonly FeatureRepository $featureRepository)
 	{
-		$this->featureRepository = $featureRepository;
-
 		parent::__construct('unleash:features:fetch');
 	}
 

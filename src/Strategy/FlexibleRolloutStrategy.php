@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FlexibleRolloutStrategy implements StrategyInterface
 {
-	public function isEnabled(array $parameters = [], array $context = [], ...$args): bool
+	public function isEnabled(array $parameters = [], array $context = [], mixed ...$args): bool
 	{
 		$percentage = intval($parameters['rollout'] ?? 0);
 		$stickiness = strtolower($parameters['stickiness'] ?? 'default');
@@ -17,24 +17,12 @@ class FlexibleRolloutStrategy implements StrategyInterface
 		$sessionId = trim($this->getSessionId($context) ?? '');
 		$randomId = sprintf('%s', mt_rand(1, 100));
 
-		switch ($stickiness) {
-			case 'userid':
-				$stickinessId = $userId;
-				break;
-
-			case 'sessionid':
-				$stickinessId = $sessionId;
-				break;
-
-			case 'random':
-				$stickinessId = $randomId;
-				break;
-
-			default:
-				// Default strategy is to use available ID in this order: userId, sessionId and randomId.
-				$stickinessId = $userId ?: $sessionId ?: $randomId;
-				break;
-		}
+		$stickinessId = match ($stickiness) {
+			'userid' => $userId,
+			'sessionid' => $sessionId,
+			'random' => $randomId,
+			default => ($userId ?: $sessionId) ?: $randomId,
+		};
 
 		if (!$stickinessId) {
 			return false;
@@ -49,19 +37,13 @@ class FlexibleRolloutStrategy implements StrategyInterface
 	protected function getUserId(array $context): ?string
 	{
 		if (array_key_exists('user', $context) && $context['user'] !== null) {
-			/** @var UserInterface */
 			$currentUser = $context['user'];
-
-			if (method_exists($currentUser, 'getId')) {
-				return $currentUser->getId();
+			if ($currentUser instanceof UserInterface) {
+				return $currentUser->getUserIdentifier();
 			}
 
-			if ($currentUser instanceof UserInterface) {
-				if (method_exists($currentUser, 'getUserIdentifier')) {
-					return $currentUser->getUserIdentifier();
-				}
-
-				return $currentUser->getUsername();
+			if (is_object($currentUser) && method_exists($currentUser, 'getId')) {
+				return $currentUser->getId();
 			}
 		}
 

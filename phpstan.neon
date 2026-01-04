@@ -4,5 +4,3 @@ parameters:
         - src
         - tests
     reportUnmatchedIgnoredErrors: false
-    ignoreErrors:
-        - '#Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername\(\)\.#'

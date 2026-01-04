@@ -6,9 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Stogon\UnleashBundle\Twig\UnleashExtension;
 use Stogon\UnleashBundle\UnleashInterface;
 
-/**
- * @coversDefaultClass \Stogon\UnleashBundle\Twig\UnleashExtension
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(UnleashExtension::class)]
 class UnleashExtensionTest extends TestCase
 {
 	protected const FEATURES = [
@@ -16,10 +14,6 @@ class UnleashExtensionTest extends TestCase
 		'beta_feature' => false,
 	];
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureEnabled
-	 */
 	public function testIsFeatureEnabled(): void
 	{
 		$unleashMock = $this->createMock(UnleashInterface::class);
@@ -35,10 +29,6 @@ class UnleashExtensionTest extends TestCase
 		$this->assertTrue($result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureEnabled
-	 */
 	public function testIsFeatureEnabledWithFallback(): void
 	{
 		$unleashMock = $this->createMock(UnleashInterface::class);
@@ -54,10 +44,6 @@ class UnleashExtensionTest extends TestCase
 		$this->assertTrue($result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureDisabled
-	 */
 	public function testIsFeatureDisabled(): void
 	{
 		$unleashMock = $this->createMock(UnleashInterface::class);
@@ -73,10 +59,6 @@ class UnleashExtensionTest extends TestCase
 		$this->assertTrue($result);
 	}
 
-	/**
-	 * @covers ::__construct
-	 * @covers ::isFeatureDisabled
-	 */
 	public function testIsFeatureDisabledWithFallback(): void
 	{
 		$unleashMock = $this->createMock(UnleashInterface::class);

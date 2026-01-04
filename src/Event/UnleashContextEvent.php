@@ -6,11 +6,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UnleashContextEvent extends Event
 {
-	private array $payload;
-
-	public function __construct(array $payload = [])
+	public function __construct(private array $payload = [])
 	{
-		$this->payload = $payload;
 	}
 
 	public function getPayload(): array

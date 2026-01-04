@@ -18,7 +18,7 @@ use Stogon\UnleashBundle\Twig\UnleashExtension;
 use Stogon\UnleashBundle\Unleash;
 use Stogon\UnleashBundle\UnleashInterface;
 
-return function (ContainerConfigurator $configurator) {
+return function (ContainerConfigurator $configurator): void {
 	$services = $configurator->services();
 
 	$services->instanceof(StrategyInterface::class)->tag('unleash.strategy');
