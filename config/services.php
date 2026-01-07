@@ -24,6 +24,7 @@ return function (ContainerConfigurator $configurator): void {
 	$services->instanceof(StrategyInterface::class)->tag('unleash.strategy');
 
 	$services->set(UnleashHttpClient::class)
+		->arg('$httpClient', service('unleash.client'))
 		->arg('$apiUrl', '%unleash.api_url%')
 		->arg('$instanceId', '%unleash.instance_id%')
 		->arg('$environment', '%unleash.environment%')
@@ -41,7 +42,7 @@ return function (ContainerConfigurator $configurator): void {
 	$services->set(GradualRolloutRandomStrategy::class)->tag('unleash.strategy', ['activation_name' => 'gradualRolloutRandom']);
 
 	$services->set(FeatureRepository::class)
-		->arg('$httpClient', service(UnleashHttpClient::class))
+		->arg('$client', service(UnleashHttpClient::class))
 		->arg('$cache', '%unleash.cache.service%')
 		->arg('$ttl', '%unleash.cache.ttl%')
 		->autowire(true)
